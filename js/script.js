@@ -587,15 +587,47 @@ if (localidadNormalizada !== "alcoy" &&
 
     return;
 }
-// FECHA, HORA Y NÚMERO DE PEDIDO
+// FECHA Y HORA DEL PEDIDO
 const fechaHoraPedido = new Intl.DateTimeFormat("es-ES", {
     timeZone: "Europe/Madrid",
     dateStyle: "short",
     timeStyle: "short"
 }).format(new Date());
 
-const numeroPedido = "MW-" + Date.now().toString().slice(-8);
-            let mensaje = "🍗 *MRWINGSALCOY*\n";
+// SOLICITAR NÚMERO CONSECUTIVO A CLOUDFLARE
+let numeroPedido;
+
+try {
+    const respuestaPedido = await fetch(
+        "https://misty-tooth-6094.oquijandriagarcia.workers.dev/",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "pedido"
+            })
+        }
+    );
+
+    if (!respuestaPedido.ok) {
+        throw new Error("No se pudo generar el pedido");
+    }
+
+    const resultadoPedido = await respuestaPedido.json();
+
+    numeroPedido = resultadoPedido.numeroPedido;
+
+    if (!numeroPedido) {
+        throw new Error("Número de pedido no recibido");
+    }
+
+} catch (error) {
+    alert("No se pudo generar el número de pedido. Inténtalo nuevamente.");
+    return;
+}
+let mensaje = "🍗 *MRWINGSALCOY*\n";
 mensaje += "━━━━━━━━━━━━━━━━\n";
 mensaje += "🛎️ *NUEVO PEDIDO RECIBIDO*\n";
 mensaje += "━━━━━━━━━━━━━━━━\n";
