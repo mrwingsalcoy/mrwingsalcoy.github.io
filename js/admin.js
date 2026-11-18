@@ -777,6 +777,108 @@ document.getElementById("limpiar-fechas").addEventListener("click", function() {
 
 });
 // =====================================
+// EXPORTAR PEDIDOS A EXCEL
+// =====================================
+
+document.getElementById("exportar-excel").addEventListener("click", function() {
+
+    if (typeof XLSX === "undefined") {
+        alert("No se ha podido cargar la biblioteca de Excel.");
+        return;
+    }
+
+    const desde = document.getElementById("fecha-desde").value;
+    const hasta = document.getElementById("fecha-hasta").value;
+
+    if ((desde && !hasta) || (!desde && hasta)) {
+        alert("Selecciona las dos fechas para exportar un periodo.");
+        return;
+    }
+
+    if (desde && hasta && desde > hasta) {
+        alert("La fecha inicial no puede ser posterior a la final.");
+        return;
+    }
+
+    let pedidosExportar = pedidosCargados;
+
+    if (desde && hasta) {
+        pedidosExportar = pedidosCargados.filter(pedido => {
+
+            const coincidencia = String(pedido.fecha || "").match(
+                /^(\d{2})\/(\d{2})\/(\d{2,4})/
+            );
+
+            if (!coincidencia) return false;
+
+            let anio = coincidencia[3];
+
+            if (anio.length === 2) anio = "20" + anio;
+
+            const fechaPedido =
+                `${anio}-${coincidencia[2]}-${coincidencia[1]}`;
+
+            return fechaPedido >= desde && fechaPedido <= hasta;
+
+        });
+    }
+
+    if (pedidosExportar.length === 0) {
+        alert("No hay pedidos para exportar.");
+        return;
+    }
+
+    const filas = pedidosExportar.map(pedido => {
+
+        let productos = {};
+
+        try {
+            productos = typeof pedido.productos === "string"
+                ? JSON.parse(pedido.productos)
+                : pedido.productos;
+        } catch(error) {
+            productos = {};
+        }
+
+        const items = productos.items || [];
+
+        const detalle = items.map(item => {
+
+            if (item.tipo === "combo") {
+                return `${item.sabor} - ${item.descripcion || ""} - Sabores: ${(item.sabores || []).join(", ")} - Cantidad: ${Number(item.unidades || 1)}`;
+            }
+
+            return `${item.sabor} - ${Number(item.cantidad || 0)} alitas - Cantidad: ${Number(item.unidades || 1)}`;
+
+        }).join(" | ");
+
+        return {
+            "Número de pedido": pedido.numero_pedido,
+            "Fecha": pedido.fecha,
+            "Cliente": pedido.cliente,
+            "Teléfono": pedido.telefono,
+            "Dirección": pedido.direccion,
+            "Productos": detalle,
+            "Total (€)": Number(pedido.total || 0),
+            "Estado": pedido.estado
+        };
+
+    });
+
+    const hoja = XLSX.utils.json_to_sheet(filas);
+
+    const libro = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(libro, hoja, "Pedidos");
+
+    const nombreArchivo = desde && hasta
+        ? `MrWings_Ventas_${desde}_${hasta}.xlsx`
+        : "MrWings_Pedidos.xlsx";
+
+    XLSX.writeFile(libro, nombreArchivo);
+
+});
+// =====================================
 // RECUPERAR SESIÓN
 // =====================================
 
