@@ -212,7 +212,9 @@ const pedidosHoy = pedidos.filter(pedido => {
 
     }
 
-    pedidos.forEach(pedido => {
+    pedidos
+.filter(pedido => pedido.estado !== "Entregado")
+.forEach(pedido => {
 
         const tarjeta = document.createElement("div");
 
