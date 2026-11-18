@@ -7,6 +7,7 @@ const API_URL = "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
 let pedidosCargados = [];
 let vistaActual = "activos";
 let filtroBusqueda = "";
+let graficoVentas = null;
 
 const loginSection = document.getElementById("login-section");
 const dashboardSection = document.getElementById("dashboard-section");
@@ -162,6 +163,103 @@ async function cargarPedidos() {
 
 }
 // =====================================
+// GRÁFICO DE VENTAS DE LOS ÚLTIMOS 7 DÍAS
+// =====================================
+
+function actualizarGraficoVentas(pedidos) {
+
+    const ahora = new Date();
+
+    const partes = new Intl.DateTimeFormat("es-ES", {
+        timeZone: "Europe/Madrid",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    }).formatToParts(ahora);
+
+    const dia = Number(partes.find(p => p.type === "day").value);
+    const mes = Number(partes.find(p => p.type === "month").value);
+    const anio = Number(partes.find(p => p.type === "year").value);
+
+    const etiquetas = [];
+    const ventas = [];
+
+    for (let i = 6; i >= 0; i--) {
+
+        const fecha = new Date(Date.UTC(anio, mes - 1, dia - i));
+
+        const diaFecha = String(fecha.getUTCDate()).padStart(2, "0");
+        const mesFecha = String(fecha.getUTCMonth() + 1).padStart(2, "0");
+        const anioFecha = fecha.getUTCFullYear();
+
+        const fechaTexto = `${diaFecha}/${mesFecha}/${String(anioFecha).slice(-2)}`;
+
+        etiquetas.push(`${diaFecha}/${mesFecha}`);
+
+        const totalDia = pedidos
+            .filter(pedido => {
+                const coincidencia = String(pedido.fecha || "").match(
+                    /^(\d{2})\/(\d{2})\/(\d{2,4})/
+                );
+
+                if (!coincidencia) return false;
+
+                const anioPedido = coincidencia[3].length === 2
+                    ? "20" + coincidencia[3]
+                    : coincidencia[3];
+
+                return `${coincidencia[1]}/${coincidencia[2]}/${anioPedido}` ===
+                    `${diaFecha}/${mesFecha}/${anioFecha}`;
+            })
+            .reduce((total, pedido) => total + Number(pedido.total || 0), 0);
+
+        ventas.push(totalDia);
+    }
+
+    const contexto = document.getElementById("grafico-ventas");
+
+    if (!contexto) return;
+
+    if (graficoVentas) {
+        graficoVentas.destroy();
+    }
+
+    graficoVentas = new Chart(contexto, {
+        type: "bar",
+        data: {
+            labels: etiquetas,
+            datasets: [{
+                label: "Ventas (€)",
+                data: ventas,
+                backgroundColor: "#ff6b00",
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#ffffff"
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: "#ffffff" },
+                    grid: { color: "#333333" }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: "#ffffff" },
+                    grid: { color: "#333333" }
+                }
+            }
+        }
+    });
+}
+// =====================================
 // MOSTRAR PEDIDOS Y ESTADÍSTICAS
 // =====================================
 
@@ -271,6 +369,8 @@ document.getElementById("pedidos-entregados").textContent =
     pedidosEntregados.length;
 
 document.getElementById("ticket-medio").textContent = euros(ticketMedio);
+// ACTUALIZAR GRÁFICO DE VENTAS
+actualizarGraficoVentas(pedidos);
 // FILTRAR PEDIDOS SEGÚN LA PESTAÑA
 let pedidosVista = vistaActual === "activos"
     ? pedidos.filter(pedido => pedido.estado !== "Entregado")
