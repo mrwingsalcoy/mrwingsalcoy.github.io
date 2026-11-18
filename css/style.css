@@ -749,6 +749,7 @@ footer p {
 
 @media (max-width: 768px) {
 
+    /* PORTADA */
     .hero-content {
         flex-direction: column;
         text-align: center;
@@ -770,6 +771,30 @@ footer p {
     .hero-image img {
         height: 280px;
     }
+
+
+    /* TARJETAS DE COMBOS */
+    .combo-card {
+        height: auto;
+        padding: 18px 15px;
+        margin-bottom: 20px;
+    }
+
+    /* IMÁGENES DE COMBOS */
+    .combo-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        margin-bottom: 12px;
+    }
+
+    /* TÍTULO DE SELECCIÓN */
+    .combo-selection-title {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+
 }
 /* =========================================
    NAVBAR PREMIUM MRWINGSALCOY
