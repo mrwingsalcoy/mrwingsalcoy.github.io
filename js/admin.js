@@ -234,63 +234,114 @@ if (pedidosVista.length === 0) {
 // MOSTRAR PEDIDOS
 pedidosVista.forEach(pedido => {
 
-        const tarjeta = document.createElement("div");
+    const tarjeta = document.createElement("div");
 
-        tarjeta.className = "stat-card";
+    tarjeta.className = "stat-card";
 
-        let productos = {};
+    let productos = {};
 
-        try {
+    try {
 
-            productos = typeof pedido.productos === "string"
-                ? JSON.parse(pedido.productos)
-                : pedido.productos;
+        productos = typeof pedido.productos === "string"
+            ? JSON.parse(pedido.productos)
+            : pedido.productos;
 
-        } catch(error) {
+    } catch(error) {
 
-            productos = {};
+        productos = {};
 
-        }
+    }
 
-        const items = productos.items || [];
+    const items = productos.items || [];
 
-        const detalle = items.map(item => {
+    const detalle = items.map(item => {
 
-            if (item.tipo === "combo") {
-
-                return `
-                    <p>
-                        🍗 ${escapar(item.sabor)}
-                        — ${escapar(item.descripcion || "")}
-                        <br>
-                        Sabores: ${escapar((item.sabores || []).join(", "))}
-                        <br>
-                        Cantidad: ${Number(item.unidades || 1)}
-                    </p>
-                `;
-
-            }
+        if (item.tipo === "combo") {
 
             return `
                 <p>
                     🍗 ${escapar(item.sabor)}
-                    — ${Number(item.cantidad || 0)} alitas
+                    — ${escapar(item.descripcion || "")}
+                    <br>
+                    Sabores: ${escapar((item.sabores || []).join(", "))}
                     <br>
                     Cantidad: ${Number(item.unidades || 1)}
                 </p>
             `;
 
-        }).join("");
+        }
+
+        return `
+            <p>
+                🍗 ${escapar(item.sabor)}
+                — ${Number(item.cantidad || 0)} alitas
+                <br>
+                Cantidad: ${Number(item.unidades || 1)}
+            </p>
+        `;
+
+    }).join("");
+
+    // =====================================
+    // HISTORIAL: PEDIDOS DESPLEGABLES
+    // =====================================
+
+    if (vistaActual === "historial") {
+
+        tarjeta.style.padding = "0";
+        tarjeta.style.overflow = "hidden";
+
+        tarjeta.innerHTML = `
+            <button class="historial-toggle"
+                    type="button"
+                    style="width:100%; padding:18px; background:#202020;
+                    color:#ff6b00; border:none; text-align:left;
+                    font-size:19px; font-weight:bold; cursor:pointer;">
+
+                📋 ${escapar(pedido.numero_pedido)}
+                <span style="float:right;">▼</span>
+
+            </button>
+
+            <div class="historial-detalle" hidden
+                 style="padding:20px;">
+
+                <p>📅 ${escapar(pedido.fecha)}</p>
+                <p>👤 ${escapar(pedido.cliente)}</p>
+                <p>📞 ${escapar(pedido.telefono)}</p>
+                <p>📍 ${escapar(pedido.direccion)}</p>
+
+                <hr>
+
+                <strong>🍗 PRODUCTOS</strong>
+
+                ${detalle}
+
+                ${productos.observaciones
+                    ? `<p>📝 ${escapar(productos.observaciones)}</p>`
+                    : ""}
+
+                <hr>
+
+                <h4>💰 ${euros(Number(pedido.total))}</h4>
+
+                <p>Estado: <strong>Entregado</strong></p>
+
+            </div>
+        `;
+
+    } else {
+
+        // =====================================
+        // PEDIDOS ACTIVOS: INFORMACIÓN COMPLETA
+        // =====================================
 
         tarjeta.innerHTML = `
             <h3>${escapar(pedido.numero_pedido)}</h3>
 
             <p>📅 ${escapar(pedido.fecha)}</p>
-
             <p>👤 ${escapar(pedido.cliente)}</p>
-
             <p>📞 ${escapar(pedido.telefono)}</p>
-
             <p>📍 ${escapar(pedido.direccion)}</p>
 
             <hr>
@@ -327,11 +378,36 @@ pedidosVista.forEach(pedido => {
             </button>
         `;
 
-        contenedor.appendChild(tarjeta);
+    }
+
+    contenedor.appendChild(tarjeta);
+
+});
+
+// =====================================
+// ACTIVAR DESPLEGABLES DEL HISTORIAL
+// =====================================
+
+if (vistaActual === "historial") {
+
+    document.querySelectorAll(".historial-toggle").forEach(boton => {
+
+        boton.addEventListener("click", function() {
+
+            const detalle = this.nextElementSibling;
+
+            detalle.hidden = !detalle.hidden;
+
+            this.querySelector("span").textContent =
+                detalle.hidden ? "▼" : "▲";
+
+        });
 
     });
 
-    activarBotonesEstado();
+}
+
+activarBotonesEstado();
 
 }
 // =====================================
