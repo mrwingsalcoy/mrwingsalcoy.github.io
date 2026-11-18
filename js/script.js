@@ -771,6 +771,8 @@ try {
     return;
 }
 ventanaWhatsApp.location.href = url;
+console.log("URL de WhatsApp:", url);
+console.log("Ventana WhatsApp:", ventanaWhatsApp);
 // DETECTAR CUANDO EL CLIENTE REGRESA DE WHATSAPP
 let salioDeLaWeb = false;
 
