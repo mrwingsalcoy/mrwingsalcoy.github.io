@@ -327,7 +327,7 @@ pedidosVista.forEach(pedido => {
             </button>
         `;
 
-        ocontenedor.appendChild(tarjeta);
+        contenedor.appendChild(tarjeta);
 
     });
 
