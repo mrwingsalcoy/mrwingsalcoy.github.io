@@ -160,7 +160,7 @@ async function cargarPedidos() {
 
 function mostrarPedidos(pedidos) {
 
-    const ahora = new Date();
+const ahora = new Date();
 
 const partesHoy = new Intl.DateTimeFormat("es-ES", {
     timeZone: "Europe/Madrid",
@@ -189,7 +189,9 @@ const pedidosHoy = pedidos.filter(pedido => {
         coincidencia[3].slice(-2) === anioHoy
     );
 
-});    const ventasHoy = pedidosHoy.reduce(
+});
+
+    const ventasHoy = pedidosHoy.reduce(
         (total, pedido) => total + Number(pedido.total || 0),
         0
     );
