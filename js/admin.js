@@ -457,55 +457,55 @@ pedidosVista.forEach(pedido => {
 
     }).join("");
 
-    // =====================================
-    // HISTORIAL: PEDIDOS DESPLEGABLES
-    // =====================================
+        // =====================================
+        // HISTORIAL: PEDIDOS DESPLEGABLES
+        // =====================================
 
-    if (vistaActual === "historial") {
+        if (vistaActual === "historial") {
 
-        tarjeta.style.padding = "0";
-        tarjeta.style.overflow = "hidden";
+            tarjeta.style.padding = "0";
+            tarjeta.style.overflow = "hidden";
 
-        tarjeta.innerHTML = `
-            <button class="historial-toggle"
-                    type="button"
-                    style="width:100%; padding:18px; background:#202020;
-                    color:#ff6b00; border:none; text-align:left;
-                    font-size:19px; font-weight:bold; cursor:pointer;">
+            tarjeta.innerHTML = `
+                <button class="historial-toggle"
+                        type="button"
+                        style="width:100%; padding:18px; background:#202020;
+                        color:#ff6b00; border:none; text-align:left;
+                        font-size:19px; font-weight:bold; cursor:pointer;">
 
-                📋 ${escapar(pedido.numero_pedido)}
-                <span style="float:right;">▼</span>
+                    📋 ${escapar(pedido.numero_pedido)}
+                    <span style="float:right;">▼</span>
 
-            </button>
+                </button>
 
-            <div class="historial-detalle" hidden
-                 style="padding:20px;">
+                <div class="historial-detalle" hidden
+                    style="padding:20px;">
 
-                <p>📅 ${escapar(pedido.fecha)}</p>
-                <p>👤 ${escapar(pedido.cliente)}</p>
-                <p>📞 ${escapar(pedido.telefono)}</p>
-                <p>📍 ${escapar(pedido.direccion)}</p>
+                    <p>📅 ${escapar(pedido.fecha)}</p>
+                    <p>👤 ${escapar(pedido.cliente)}</p>
+                    <p>📞 ${escapar(pedido.telefono)}</p>
+                    <p>📍 ${escapar(pedido.direccion)}</p>
 
-                <hr>
+                    <hr>
 
-                <strong>🍗 PRODUCTOS</strong>
+                    <strong>🍗 PRODUCTOS</strong>
 
-                ${detalle}
+                    ${detalle}
 
-                ${productos.observaciones
-                    ? `<p>📝 ${escapar(productos.observaciones)}</p>`
-                    : ""}
+                    ${productos.observaciones
+                        ? `<p>📝 ${escapar(productos.observaciones)}</p>`
+                        : ""}
 
-                <hr>
+                    <hr>
 
-                <h4>💰 ${euros(Number(pedido.total))}</h4>
+                    <h4>💰 ${euros(Number(pedido.total))}</h4>
 
-                <p>Estado: <strong>Entregado</strong></p>
+                    <p>Estado: <strong>Entregado</strong></p>
 
-            </div>
-        `;
+                </div>
+            `;
 
-    } else {
+        } else {
 
         // =====================================
         // PEDIDOS ACTIVOS: INFORMACIÓN COMPLETA
@@ -859,8 +859,9 @@ document.getElementById("exportar-excel").addEventListener("click", function() {
             "Teléfono": pedido.telefono,
             "Dirección": pedido.direccion,
             "Productos": detalle,
-            "Total (€)": Number(pedido.total || 0),
-            "Estado": pedido.estado
+"Observaciones del cliente": productos.observaciones || "Sin observaciones",
+"Total (€)": Number(pedido.total || 0),
+"Estado": pedido.estado
         };
 
     });
