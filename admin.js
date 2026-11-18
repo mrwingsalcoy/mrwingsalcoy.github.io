@@ -160,12 +160,22 @@ async function cargarPedidos() {
 
 function mostrarPedidos(pedidos) {
 
-    const hoy = new Intl.DateTimeFormat("es-ES", {
-        timeZone: "Europe/Madrid"
-    }).format(new Date());
+    const fechaHoy = new Intl.DateTimeFormat("es-ES", {
+    timeZone: "Europe/Madrid",
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit"
+}).format(new Date());
 
 const pedidosHoy = pedidos.filter(pedido => {
 
+    const fechaPedido = String(pedido.fecha || "").trim();
+
+    const fecha = fechaPedido.split(",")[0].trim();
+
+    return fecha === fechaHoy;
+
+});
     const fechaPedido = String(pedido.fecha || "");
 
     const fechaHoy = new Intl.DateTimeFormat("es-ES", {
