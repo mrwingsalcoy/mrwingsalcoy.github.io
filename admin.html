@@ -60,37 +60,9 @@
                 </button>
             </div>
 
-            <div class="stats-container">
-                <div class="date-filter-container">
+<!-- ESTADÍSTICAS -->
+<div class="stats-container">
 
-    <h3>📅 Consultar ventas por fechas</h3>
-
-    <div class="date-filter-fields">
-
-        <div>
-            <label for="fecha-desde">Desde:</label>
-            <input type="date" id="fecha-desde">
-        </div>
-
-        <div>
-            <label for="fecha-hasta">Hasta:</label>
-            <input type="date" id="fecha-hasta">
-        </div>
-
-        <button id="filtrar-fechas">Consultar</button>
-
-        <button id="limpiar-fechas">Limpiar</button>
-
-    </div>
-
-    <div id="resultado-fechas"></div>
-
-</div>
-                <div class="chart-container">
-                <h3>📊 Ventas de los últimos 7 días</h3>
-                <canvas id="grafico-ventas"></canvas>
-                </div>
-            </div>
     <div class="stat-card">
         <span>Pedidos de hoy</span>
         <strong id="total-pedidos">0</strong>
@@ -123,6 +95,40 @@
 
 </div>
 
+<!-- FILTRO DE VENTAS -->
+<div class="date-filter-container">
+
+    <h3>📅 Consultar ventas por fechas</h3>
+
+    <div class="date-filter-fields">
+
+        <div>
+            <label for="fecha-desde">Desde:</label>
+            <input type="date" id="fecha-desde">
+        </div>
+
+        <div>
+            <label for="fecha-hasta">Hasta:</label>
+            <input type="date" id="fecha-hasta">
+        </div>
+
+        <button id="filtrar-fechas">Consultar</button>
+        <button id="limpiar-fechas">Limpiar</button>
+
+    </div>
+
+    <div id="resultado-fechas"></div>
+
+</div>
+
+<!-- GRÁFICO DE VENTAS -->
+<div class="chart-container">
+
+    <h3>📊 Ventas de los últimos 7 días</h3>
+
+    <canvas id="grafico-ventas"></canvas>
+
+</div>
             <div class="orders-header">
                 <h3>Últimos pedidos</h3>
 
