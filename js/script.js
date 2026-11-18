@@ -106,6 +106,95 @@ notificationTimer = setTimeout(() => {
         });
 
     });
+
+    // SELECCIONAR SABORES Y PERMITIR REPETICIONES
+
+document.querySelectorAll(".combo-flavor-group").forEach(grupo => {
+
+    grupo.querySelectorAll(".flavor-option").forEach(boton => {
+
+        boton.dataset.count = "0";
+
+        boton.addEventListener("click", function() {
+
+            const tarjeta = this.closest(".combo-card");
+            const grupos = tarjeta.querySelectorAll(".combo-flavor-group");
+            const titulo = tarjeta.querySelector(".combo-selection-title");
+            const limite = Number(titulo.textContent.match(/\d+/)[0]);
+
+            const seleccionados = Array.from(
+                tarjeta.querySelectorAll(".flavor-option")
+            ).reduce((total, opcion) => total + Number(opcion.dataset.count), 0);
+
+            if (seleccionados >= limite) return;
+
+            this.dataset.count = Number(this.dataset.count) + 1;
+
+            this.textContent = Number(this.dataset.count) > 0
+                ? `${this.dataset.flavor} × ${this.dataset.count}`
+                : this.dataset.flavor;
+
+            this.classList.add("selected");
+
+            const nuevoTotal = seleccionados + 1;
+            const contador = tarjeta.querySelector(".selection-counter");
+            const barra = tarjeta.querySelector(".selection-progress-fill");
+
+            contador.textContent = `${nuevoTotal} de ${limite} sabores seleccionados`;
+            barra.style.width = `${(nuevoTotal / limite) * 100}%`;
+            // DESBLOQUEAR BOTÓN CUANDO EL COMBO ESTÉ COMPLETO
+const botonAñadir = tarjeta.querySelector(".add-combo");
+
+if (botonAñadir) {
+    botonAñadir.disabled = nuevoTotal !== limite;
+}
+
+            // INDICAR CUANDO EL COMBO ESTÁ COMPLETO
+if (nuevoTotal === limite) {
+    tarjeta.classList.add("combo-complete");
+    contador.textContent = `✓ ¡COMBO COMPLETO! ${nuevoTotal} de ${limite}`;
+} else {
+    tarjeta.classList.remove("combo-complete");
+}
+
+        });
+
+    });
+
+});
+
+// LIMPIAR SABORES DEL COMBO
+
+document.querySelectorAll(".clear-flavors").forEach(boton => {
+
+    boton.addEventListener("click", function() {
+
+        const tarjeta = this.closest(".combo-card");
+        const titulo = tarjeta.querySelector(".combo-selection-title");
+        const limite = Number(titulo.textContent.match(/\d+/)[0]);
+
+        tarjeta.querySelectorAll(".flavor-option").forEach(opcion => {
+            opcion.dataset.count = "0";
+            opcion.textContent = opcion.dataset.flavor;
+            opcion.classList.remove("selected");
+        });
+
+        const contador = tarjeta.querySelector(".selection-counter");
+        const barra = tarjeta.querySelector(".selection-progress-fill");
+        const botonAñadir = tarjeta.querySelector(".add-combo");
+
+        contador.textContent = `0 de ${limite} sabores seleccionados`;
+        barra.style.width = "0%";
+
+        tarjeta.classList.remove("combo-complete");
+
+        if (botonAñadir) {
+            botonAñadir.disabled = true;
+        }
+
+    });
+
+});
 // AÑADIR COMBOS AL CARRITO
 
 document.querySelectorAll(".add-combo").forEach(boton => {
@@ -116,20 +205,44 @@ document.querySelectorAll(".add-combo").forEach(boton => {
         const precio = Number(this.dataset.price);
         const descripcion = this.dataset.description;
 
+// RECUPERAR LOS SABORES Y SUS REPETICIONES
+const tarjeta = this.closest(".combo-card");
+const titulo = tarjeta.querySelector(".combo-selection-title");
+const limite = Number(titulo.textContent.match(/\d+/)[0]);
+
+const sabores = Array.from(
+tarjeta.querySelectorAll(".flavor-option")
+).flatMap(opcion =>
+Array(Number(opcion.dataset.count || 0)).fill(opcion.dataset.flavor)
+);
+
+// COMPROBAR QUE SE HAYAN ELEGIDO TODOS LOS SABORES
+if (sabores.length !== limite) {
+alert("Por favor, selecciona todos los sabores del combo.");
+return;
+}
+
+        // BUSCAR SI YA EXISTE EL MISMO COMBO CON LOS MISMOS SABORES
         const existente = carrito.find(item =>
-            item.sabor === nombre
+            item.sabor === nombre &&
+            JSON.stringify(item.sabores) === JSON.stringify(sabores)
         );
 
         if (existente) {
+
             existente.unidades++;
+
         } else {
-                carrito.push({
+
+            carrito.push({
                 sabor: nombre,
                 descripcion: descripcion,
+                sabores: sabores,
                 precio: precio,
                 unidades: 1,
                 tipo: "combo"
             });
+
         }
 
         actualizarCarrito();
@@ -146,9 +259,8 @@ document.querySelectorAll(".add-combo").forEach(boton => {
         this.textContent = "✓ COMBO AÑADIDO";
 
     });
-
 });
-    // MOSTRAR CARRITO
+//MOSTRAR CARRITO
     function actualizarCarrito() {
 localStorage.setItem("mrwingsCarrito", JSON.stringify(carrito));
         cartItems.innerHTML = "";
@@ -189,7 +301,7 @@ if (cartCount) {
             fila.innerHTML=`
     <div>
         <strong>${item.sabor}</strong>
-        <p>${item.tipo === "combo" ? item.descripcion : item.cantidad + " alitas"}</p>
+        <p>${item.tipo === "combo" ? item.descripcion + " | Sabores: " + item.sabores.join(", ") : item.cantidad + " alitas"}</p>
         <p>Precio: ${euros(item.precio)}</p>
 
         <div class="cart-quantity">
@@ -377,15 +489,20 @@ if (localidadNormalizada !== "alcoy" &&
 
             carrito.forEach(item => {
 
-    if (item.tipo === "combo") {
+  if (item.tipo === "combo") {
 
-        mensaje += `• ${item.sabor} (${item.descripcion}) × ${item.unidades} = ${euros(item.precio * item.unidades)}\n`;
+    const saboresElegidos = item.sabores.join(", ");
 
-    } else {
+    mensaje += `• ${item.sabor} (${item.descripcion})\n`;
+    mensaje += `   Sabores elegidos: ${saboresElegidos}\n`;
+    mensaje += `   Cantidad: ${item.unidades}\n`;
+    mensaje += `   Subtotal: ${euros(item.precio * item.unidades)}\n`;
 
-        mensaje += `• ${item.sabor}: ${item.cantidad} alitas × ${item.unidades} = ${euros(item.precio * item.unidades)}\n`;
+} else {
 
-    }
+    mensaje += `• ${item.sabor}: ${item.cantidad} alitas × ${item.unidades} = ${euros(item.precio * item.unidades)}\n`;
+
+}
 
 });
 

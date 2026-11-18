@@ -669,18 +669,14 @@ footer p {
     }
 }
 /* FOTOGRAFÍAS DE LOS COMBOS */
-
 .combo-image {
     display: block;
     width: 100%;
-    height: 640px;
+    height: auto;
     object-fit: contain;
     object-position: center;
     border-radius: 10px;
     margin-bottom: 20px;
-}
-.combo-card:hover .combo-image {
-    transform: scale(1.03);
 }
 /* =========================================
    PORTADA IMPACTANTE MRWINGSALCOY
@@ -1474,4 +1470,295 @@ body.cart-open {
 #checkout-form button:hover {
     background: #e64f00;
     transform: translateY(-2px);
+}
+/* SELECTORES DE SABORES DE LOS COMBOS */
+
+.combo-flavor-select {
+    background-color: #171717;
+    color: white;
+    border: 1px solid #ff6600;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* AL SELECCIONAR */
+
+.combo-flavor-select:focus {
+    background-color: #222;
+    color: white;
+    border: 2px solid #ff6600;
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+}
+
+/* OPCIONES DEL DESPLEGABLE */
+
+.combo-flavor-select option {
+    background-color: #171717;
+    color: white;
+}
+/* GRUPOS DE SABORES */
+
+.combo-flavor-group {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.combo-flavor-group h5 {
+    color: #ff6900;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* DISTRIBUCIÓN DE BOTONES */
+
+.flavor-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.flavor-option {
+    background: #242424;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 7px;
+    padding: 9px 3px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-width: 0;
+}
+@media (max-width: 576px) {
+    .flavor-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* BOTONES DE SABORES */
+
+.flavor-option {
+    background: #242424;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 11px 5px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* EFECTO AL PASAR EL RATÓN */
+
+.flavor-option:hover {
+    border-color: #ff6900;
+    transform: translateY(-2px);
+}
+
+/* SABOR SELECCIONADO */
+
+.flavor-option.selected {
+    background: #ff6900;
+    color: #fff;
+    border-color: #ff6900;
+    box-shadow: 0 0 12px rgba(255, 105, 0, 0.4);
+}
+/* TITULO DE SELECCIÓN */
+.combo-selection-title {
+    color: #fff;
+    font-size: 19px;
+    font-weight: 900;
+    margin: 20px 0 15px;
+}
+
+/* CONTADOR DE SABORES */
+.combo-selection-progress {
+    background: #202020;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+}
+
+.selection-counter {
+    color: #ff6900;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* BARRA DE PROGRESO */
+.selection-progress-bar {
+    height: 5px;
+    background: #444;
+    border-radius: 10px;
+    margin-top: 9px;
+    overflow: hidden;
+}
+
+.selection-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #ff6900;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* TARJETAS DE SABORES */
+.combo-flavor-group {
+    background: #202020;
+    border: 1px solid #383838;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+/* ENCABEZADO DE CADA SABOR */
+.combo-flavor-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.combo-flavor-heading span {
+    background: #ff6900;
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 6px 9px;
+    border-radius: 6px;
+}
+
+.combo-flavor-heading h5 {
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* BOTONES */
+.flavor-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+}
+
+.flavor-option {
+    background: #292929;
+    color: white;
+    border: 1px solid #454545;
+    border-radius: 7px;
+    padding: 10px 3px;
+    font-size: 10px;
+    font-weight: 800;
+    transition: 0.25s;
+}
+
+.flavor-option.selected {
+    background: linear-gradient(135deg, #ff7900, #ff4d00);
+    border: 2px solid #ff9a42;
+    color: #fff;
+    font-weight: 900;
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(255,105,0,0.35);
+}
+
+.flavor-option {
+    cursor: pointer;
+    min-height: 42px;
+    transition: all 0.25s ease;
+}
+
+.flavor-option:hover {
+    border-color: #ff6900;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 576px) {
+    .flavor-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* COMBO COMPLETO */
+.combo-card.combo-complete {
+    border: 2px solid #ff6900;
+    box-shadow: 0 0 18px rgba(255, 105, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+/* CONTADOR COMPLETADO */
+.combo-complete .selection-counter {
+    color: #00d68f;
+    font-weight: 900;
+}
+
+/* BARRA COMPLETADA */
+.combo-complete .selection-progress-fill {
+    background: #00d68f;
+}
+/* BOTÓN LIMPIAR SABORES */
+.clear-flavors {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #252525;
+    color: #ff7900;
+    border: 1px solid #ff6900;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-flavors:hover {
+    background: #ff6900;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(255,105,0,0.3);
+    transform: translateY(-2px);
+}
+
+.clear-flavors:active {
+    transform: scale(0.97);
+}
+/* BOTÓN AÑADIR COMBO */
+.add-combo {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #ff7900, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 16px rgba(255, 90, 0, 0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-combo:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(255, 90, 0, 0.45);
+}
+
+.add-combo:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+/* BOTÓN DESACTIVADO */
+.add-combo:disabled {
+    background: #383838;
+    color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
