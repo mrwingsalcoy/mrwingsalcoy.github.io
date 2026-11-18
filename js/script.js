@@ -587,9 +587,20 @@ if (localidadNormalizada !== "alcoy" &&
 
     return;
 }
+// FECHA, HORA Y NÚMERO DE PEDIDO
+const fechaHoraPedido = new Intl.DateTimeFormat("es-ES", {
+    timeZone: "Europe/Madrid",
+    dateStyle: "short",
+    timeStyle: "short"
+}).format(new Date());
+
+const numeroPedido = "MW-" + Date.now().toString().slice(-8);
             let mensaje = "🍗 *MRWINGSALCOY*\n";
 mensaje += "━━━━━━━━━━━━━━━━\n";
 mensaje += "🛎️ *NUEVO PEDIDO RECIBIDO*\n";
+mensaje += "━━━━━━━━━━━━━━━━\n";
+mensaje += `🔢 Pedido: *${numeroPedido}*\n`;
+mensaje += `📅 Fecha y hora: ${fechaHoraPedido}\n`;
 mensaje += "━━━━━━━━━━━━━━━━\n\n";
 
             mensaje += "👤 *DATOS DEL CLIENTE*\n";
