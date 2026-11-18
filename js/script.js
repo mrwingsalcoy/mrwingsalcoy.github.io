@@ -412,12 +412,20 @@ clearCartButton.addEventListener("click", function() {
 
             <label>Dirección de entrega</label>
 
-<input
-    type="text"
-    name="direccion"
-    required
-    placeholder="Calle y número en Alcoy"
->
+<div class="address-autocomplete">
+
+    <input
+        type="text"
+        id="direccion"
+        name="direccion"
+        required
+        autocomplete="off"
+        placeholder="Empieza a escribir tu calle en Alcoy"
+    >
+
+    <div id="sugerencias-direccion"></div>
+
+</div>
 <label>Localidad</label>
 
 <input
@@ -445,7 +453,77 @@ clearCartButton.addEventListener("click", function() {
         `;
 
         caja.appendChild(nuevoFormulario);
+// AUTOCOMPLETADO DE DIRECCIONES DE ALCOY
+const campoDireccion = nuevoFormulario.querySelector("#direccion");
+const listaSugerencias = nuevoFormulario.querySelector("#sugerencias-direccion");
 
+let temporizadorDireccion;
+
+campoDireccion.addEventListener("input", function () {
+
+    clearTimeout(temporizadorDireccion);
+
+    const busqueda = this.value.trim();
+
+    listaSugerencias.innerHTML = "";
+
+    if (busqueda.length < 3) return;
+
+    temporizadorDireccion = setTimeout(async function () {
+
+        try {
+
+            const parametros = new URLSearchParams({
+                q: busqueda,
+                limit: 6,
+                lang: "default",
+                bbox: "-0.55,38.65,-0.40,38.78"
+            });
+
+            const respuesta = await fetch(
+                `https://photon.komoot.io/api/?${parametros}`
+            );
+
+            const datos = await respuesta.json();
+
+            listaSugerencias.innerHTML = "";
+
+            datos.features.forEach(function (lugar) {
+
+                const p = lugar.properties;
+
+                const calle = p.street || p.name;
+
+                if (!calle) return;
+
+                const direccionCompleta = [
+                    calle,
+                    p.housenumber,
+                    p.postcode,
+                    p.city || "Alcoy"
+                ].filter(Boolean).join(", ");
+
+                const opcion = document.createElement("button");
+
+                opcion.type = "button";
+                opcion.textContent = "📍 " + direccionCompleta;
+
+                opcion.addEventListener("click", function () {
+                    campoDireccion.value = direccionCompleta;
+                    listaSugerencias.innerHTML = "";
+                });
+
+                listaSugerencias.appendChild(opcion);
+
+            });
+
+        } catch (error) {
+            console.error("Error buscando direcciones:", error);
+        }
+
+    }, 400);
+
+});
         nuevoFormulario.scrollIntoView({ behavior: "smooth" });
 
         // ENVIAR PEDIDO A WHATSAPP
@@ -456,8 +534,25 @@ clearCartButton.addEventListener("click", function() {
             const datos = new FormData(nuevoFormulario);
 
             const nombre = datos.get("nombre");
+            // VALIDAR NOMBRE
+if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s'-]{3,}$/.test(nombre.trim())) {
+    alert("Por favor, introduce un nombre válido.");
+    return;
+}
             const telefonoCliente = datos.get("telefono");
+            // VALIDAR TELÉFONO
+const telefonoLimpio = telefonoCliente.replace(/[\s-]/g, "");
+
+if (!/^\+?[0-9]{9,15}$/.test(telefonoLimpio)) {
+    alert("Por favor, introduce un número de teléfono válido (entre 9 y 15 dígitos).");
+    return;
+}
             const direccion = datos.get("direccion");
+            // VALIDAR DIRECCIÓN
+if (direccion.trim().length < 5) {
+    alert("Por favor, introduce una dirección de entrega válida.");
+    return;
+}
             const localidad = datos.get("localidad").trim();
             const piso = datos.get("piso");
             const observaciones = datos.get("observaciones");
@@ -517,10 +612,46 @@ if (localidadNormalizada !== "alcoy" &&
                 mensaje += `\n📝 Observaciones: ${observaciones}`;
             }
 
-            const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+            // ABRIR WHATSAPP CON EL PEDIDO
+const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
 
-            window.open(url, "_blank");
+window.open(url, "_blank");
+// DETECTAR CUANDO EL CLIENTE REGRESA DE WHATSAPP
+let salioDeLaWeb = false;
 
+function detectarRegresoWhatsApp() {
+
+    if (document.visibilityState === "hidden") {
+        salioDeLaWeb = true;
+    }
+
+    if (document.visibilityState === "visible" && salioDeLaWeb) {
+
+        document.removeEventListener(
+            "visibilitychange",
+            detectarRegresoWhatsApp
+        );
+
+        // VACIAR CARRITO
+        carrito = [];
+
+        actualizarCarrito();
+
+        // ELIMINAR FORMULARIO
+        nuevoFormulario.reset();
+        nuevoFormulario.remove();
+
+        // MENSAJE DE AGRADECIMIENTO
+        alert(
+            "🍗 ¡PEDIDO ENVIADO!\n\nGracias por confiar en MrWingsAlcoy."
+        );
+    }
+}
+
+document.addEventListener(
+    "visibilitychange",
+    detectarRegresoWhatsApp
+);
         });
 
     });
