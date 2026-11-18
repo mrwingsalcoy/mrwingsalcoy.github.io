@@ -162,50 +162,34 @@ function mostrarPedidos(pedidos) {
 
     const ahora = new Date();
 
-    const partesHoy = new Intl.DateTimeFormat("es-ES", {
-        timeZone: "Europe/Madrid",
-        day: "2-digit",
-        month: "2-digit",
-        year: "2-digit"
-    }).formatToParts(ahora);
+const partesHoy = new Intl.DateTimeFormat("es-ES", {
+    timeZone: "Europe/Madrid",
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit"
+}).formatToParts(ahora);
 
-    const diaHoy = partesHoy.find(p => p.type === "day").value;
-    const mesHoy = partesHoy.find(p => p.type === "month").value;
-    const anioHoy = partesHoy.find(p => p.type === "year").value;
+const diaHoy = partesHoy.find(p => p.type === "day").value;
+const mesHoy = partesHoy.find(p => p.type === "month").value;
+const anioHoy = partesHoy.find(p => p.type === "year").value;
 
-    const pedidosHoy = pedidos.filter(pedido => {
+const pedidosHoy = pedidos.filter(pedido => {
 
-        const fechaPedido = String(pedido.fecha || "");
-
-        const coincidencia = fechaPedido.match(
-            /^(\d{2})\/(\d{2})\/(\d{2,4})/
-        );
-
-        if (!coincidencia) return false;
-
-        const dia = coincidencia[1];
-        const mes = coincidencia[2];
-        const anio = coincidencia[3].slice(-2);
-
-        return (
-            dia === diaHoy &&
-            mes === mesHoy &&
-            anio === anioHoy
-        );
-
-    });
     const fechaPedido = String(pedido.fecha || "");
 
-    const fechaHoy = new Intl.DateTimeFormat("es-ES", {
-    timeZone: "Europe/Madrid",
-    dateStyle: "short"
-}).format(new Date());
+    const coincidencia = fechaPedido.match(
+        /^(\d{2})\/(\d{2})\/(\d{2,4})/
+    );
 
-    return fechaPedido.startsWith(fechaHoy);
+    if (!coincidencia) return false;
 
-});
+    return (
+        coincidencia[1] === diaHoy &&
+        coincidencia[2] === mesHoy &&
+        coincidencia[3].slice(-2) === anioHoy
+    );
 
-    const ventasHoy = pedidosHoy.reduce(
+});    const ventasHoy = pedidosHoy.reduce(
         (total, pedido) => total + Number(pedido.total || 0),
         0
     );
