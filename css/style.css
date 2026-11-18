@@ -498,9 +498,11 @@ footer p {
         letter-spacing: 3px;
     }
 
-    .flavor-card img {
-        height: 220px;
-    }
+   .flavor-card img {
+    height: 190px;
+    object-fit: contain;
+    padding: 8px;
+}
 
     .flavor-info {
         padding: 18px;
