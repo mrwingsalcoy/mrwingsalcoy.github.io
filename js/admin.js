@@ -709,7 +709,73 @@ function escapar(valor) {
     })[caracter]);
 
 }
+// =====================================
+// FILTRAR VENTAS POR FECHAS
+// =====================================
 
+document.getElementById("filtrar-fechas").addEventListener("click", function() {
+
+    const desde = document.getElementById("fecha-desde").value;
+    const hasta = document.getElementById("fecha-hasta").value;
+    const resultado = document.getElementById("resultado-fechas");
+
+    if (!desde || !hasta) {
+        resultado.textContent = "Selecciona las dos fechas.";
+        return;
+    }
+
+    if (desde > hasta) {
+        resultado.textContent = "La fecha inicial no puede ser posterior a la final.";
+        return;
+    }
+
+    const pedidosFiltrados = pedidosCargados.filter(pedido => {
+
+        const coincidencia = String(pedido.fecha || "").match(
+            /^(\d{2})\/(\d{2})\/(\d{2,4})/
+        );
+
+        if (!coincidencia) return false;
+
+        let anio = coincidencia[3];
+
+        if (anio.length === 2) {
+            anio = "20" + anio;
+        }
+
+        const fechaPedido =
+            `${anio}-${coincidencia[2]}-${coincidencia[1]}`;
+
+        return fechaPedido >= desde && fechaPedido <= hasta;
+
+    });
+
+    const totalVentas = pedidosFiltrados.reduce(
+        (total, pedido) => total + Number(pedido.total || 0),
+        0
+    );
+
+    const totalEntregados = pedidosFiltrados.filter(
+        pedido => pedido.estado === "Entregado"
+    ).length;
+
+    resultado.innerHTML = `
+        <p>📦 Pedidos encontrados: <strong>${pedidosFiltrados.length}</strong></p>
+        <p>💰 Ventas totales: <strong>${euros(totalVentas)}</strong></p>
+        <p>✅ Pedidos entregados: <strong>${totalEntregados}</strong></p>
+    `;
+
+});
+
+// LIMPIAR FILTRO
+
+document.getElementById("limpiar-fechas").addEventListener("click", function() {
+
+    document.getElementById("fecha-desde").value = "";
+    document.getElementById("fecha-hasta").value = "";
+    document.getElementById("resultado-fechas").innerHTML = "";
+
+});
 // =====================================
 // RECUPERAR SESIÓN
 // =====================================

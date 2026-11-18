@@ -61,7 +61,31 @@
             </div>
 
             <div class="stats-container">
-                
+                <div class="date-filter-container">
+
+    <h3>📅 Consultar ventas por fechas</h3>
+
+    <div class="date-filter-fields">
+
+        <div>
+            <label for="fecha-desde">Desde:</label>
+            <input type="date" id="fecha-desde">
+        </div>
+
+        <div>
+            <label for="fecha-hasta">Hasta:</label>
+            <input type="date" id="fecha-hasta">
+        </div>
+
+        <button id="filtrar-fechas">Consultar</button>
+
+        <button id="limpiar-fechas">Limpiar</button>
+
+    </div>
+
+    <div id="resultado-fechas"></div>
+
+</div>
                 <div class="chart-container">
                 <h3>📊 Ventas de los últimos 7 días</h3>
                 <canvas id="grafico-ventas"></canvas>
