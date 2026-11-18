@@ -516,11 +516,9 @@ suggest_addresses: true
                 if (!calle) return;
 
                 const direccionCompleta = [
-                    calle,
-                    p.housenumber,
-                    p.postcode,
-                    p.city || "Alcoy"
-                ].filter(Boolean).join(", ");
+    calle,
+    p.postcode
+].filter(Boolean).join(", ");
 
                 const opcion = document.createElement("button");
 
@@ -589,48 +587,61 @@ if (localidadNormalizada !== "alcoy" &&
 
     return;
 }
-            let mensaje = "🍗 *NUEVO PEDIDO - MRWINGSALCOY*\n\n";
+            let mensaje = "🍗 *MRWINGSALCOY*\n";
+mensaje += "━━━━━━━━━━━━━━━━\n";
+mensaje += "🛎️ *NUEVO PEDIDO RECIBIDO*\n";
+mensaje += "━━━━━━━━━━━━━━━━\n\n";
 
-            mensaje += `👤 Cliente: ${nombre}\n`;
-            mensaje += `📱 Teléfono: ${telefonoCliente}\n`;
-            mensaje += `📍 Dirección: ${direccion}, Nº ${numero}, ${localidad}\n`;
-            mensaje += `🏙️ Localidad: ${localidad}\n`;
+            mensaje += "👤 *DATOS DEL CLIENTE*\n";
+mensaje += `Nombre: ${nombre}\n`;
+mensaje += `Teléfono: ${telefonoCliente}\n\n`;
+
+mensaje += "📍 *DIRECCIÓN DE ENTREGA*\n";
+mensaje += `${direccion}, Nº ${numero}, ${localidad}\n`;
 
             if (piso) {
                 mensaje += `🏠 Piso y puerta: ${piso}\n`;
             }
 
-            mensaje += "\n*PRODUCTOS:*\n";
+            mensaje += "\n━━━━━━━━━━━━━━━━\n";
+mensaje += "🍗 *DETALLE DEL PEDIDO*\n";
+mensaje += "━━━━━━━━━━━━━━━━\n\n";
 
             carrito.forEach(item => {
 
-  if (item.tipo === "combo") {
+    if (item.tipo === "combo") {
 
-    const saboresElegidos = item.sabores.join(", ");
+        const saboresElegidos = item.sabores.join(", ");
 
-    mensaje += `• ${item.sabor} (${item.descripcion})\n`;
-    mensaje += `   Sabores elegidos: ${saboresElegidos}\n`;
-    mensaje += `   Cantidad: ${item.unidades}\n`;
-    mensaje += `   Subtotal: ${euros(item.precio * item.unidades)}\n`;
+        mensaje += `🍗 *${item.sabor}*\n`;
+        mensaje += `   ${item.descripcion}\n`;
+        mensaje += `   🌶️ Sabores: ${saboresElegidos}\n`;
+        mensaje += `   🔢 Cantidad: ${item.unidades}\n`;
+        mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
 
-} else {
+    } else {
 
-    mensaje += `• ${item.sabor}: ${item.cantidad} alitas × ${item.unidades} = ${euros(item.precio * item.unidades)}\n`;
+        mensaje += `🍗 *${item.sabor}*\n`;
+        mensaje += `   ${item.cantidad} alitas × ${item.unidades}\n`;
+        mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
 
-}
-
+    }
 });
 
             const total = carrito.reduce(
                 (suma, item) => suma + item.precio * item.unidades,
                 0
             );
-
-            mensaje += `\n💰 *TOTAL: ${euros(total)}*\n`;
+            mensaje += "\n━━━━━━━━━━━━━━━━\n";
+mensaje += `💰 *TOTAL DEL PEDIDO: ${euros(total)}*\n`;
+mensaje += "━━━━━━━━━━━━━━━━\n";
 
             if (observaciones) {
-                mensaje += `\n📝 Observaciones: ${observaciones}`;
-            }
+    mensaje += "\n📝 *OBSERVACIONES DEL CLIENTE*\n";
+    mensaje += `${observaciones}\n`;
+}
+
+mensaje += "\n🙏 ¡Gracias por elegir MrWingsAlcoy!";
 
             // ABRIR WHATSAPP CON EL PEDIDO
 const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
