@@ -160,22 +160,40 @@ async function cargarPedidos() {
 
 function mostrarPedidos(pedidos) {
 
-    const fechaHoy = new Intl.DateTimeFormat("es-ES", {
-    timeZone: "Europe/Madrid",
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit"
-}).format(new Date());
+    const ahora = new Date();
 
-const pedidosHoy = pedidos.filter(pedido => {
+    const partesHoy = new Intl.DateTimeFormat("es-ES", {
+        timeZone: "Europe/Madrid",
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit"
+    }).formatToParts(ahora);
 
-    const fechaPedido = String(pedido.fecha || "").trim();
+    const diaHoy = partesHoy.find(p => p.type === "day").value;
+    const mesHoy = partesHoy.find(p => p.type === "month").value;
+    const anioHoy = partesHoy.find(p => p.type === "year").value;
 
-    const fecha = fechaPedido.split(",")[0].trim();
+    const pedidosHoy = pedidos.filter(pedido => {
 
-    return fecha === fechaHoy;
+        const fechaPedido = String(pedido.fecha || "");
 
-});
+        const coincidencia = fechaPedido.match(
+            /^(\d{2})\/(\d{2})\/(\d{2,4})/
+        );
+
+        if (!coincidencia) return false;
+
+        const dia = coincidencia[1];
+        const mes = coincidencia[2];
+        const anio = coincidencia[3].slice(-2);
+
+        return (
+            dia === diaHoy &&
+            mes === mesHoy &&
+            anio === anioHoy
+        );
+
+    });
     const fechaPedido = String(pedido.fecha || "");
 
     const fechaHoy = new Intl.DateTimeFormat("es-ES", {
