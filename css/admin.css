@@ -1,0 +1,170 @@
+/* CONFIGURACIÓN GENERAL */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.admin-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+/* CABECERA */
+.admin-header {
+    text-align: center;
+    padding: 25px 10px;
+    border-bottom: 2px solid #ff6b00;
+    margin-bottom: 30px;
+}
+
+.admin-header h1 {
+    color: #ff6b00;
+    font-weight: 900;
+}
+
+.admin-header p {
+    color: #aaa;
+    margin-bottom: 0;
+}
+
+/* TARJETAS */
+.admin-card {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #202020;
+    border: 1px solid #383838;
+    border-radius: 15px;
+}
+
+.admin-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 23px;
+}
+
+.admin-card label {
+    margin-bottom: 8px;
+}
+
+.admin-card input {
+    background: #111;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 12px;
+}
+
+.admin-card input:focus {
+    background: #111;
+    color: #fff;
+    border-color: #ff6b00;
+    box-shadow: none;
+}
+
+/* BOTONES */
+.btn-admin,
+.btn-refresh,
+.btn-logout {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-admin {
+    width: 100%;
+    margin-top: 20px;
+    background: #ff6b00;
+    color: #fff;
+}
+
+.btn-admin:hover {
+    background: #e65f00;
+}
+
+.btn-logout {
+    background: #333;
+    color: #fff;
+}
+
+.btn-refresh {
+    background: #ff6b00;
+    color: #fff;
+}
+
+/* ERRORES */
+#login-error {
+    color: #ff5555;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* CABECERA DEL PANEL */
+.dashboard-header,
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* ESTADÍSTICAS */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: #202020;
+    border: 1px solid #383838;
+    border-left: 4px solid #ff6b00;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.stat-card span {
+    display: block;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.stat-card strong {
+    color: #ff6b00;
+    font-size: 27px;
+}
+
+/* PEDIDOS */
+#orders-container {
+    display: grid;
+    gap: 15px;
+}
+
+/* MÓVILES */
+@media (max-width: 600px) {
+
+    .dashboard-header,
+    .orders-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-card {
+        padding: 22px;
+    }
+}
