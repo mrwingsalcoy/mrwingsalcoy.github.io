@@ -6,6 +6,7 @@ const API_URL = "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
 // PEDIDOS Y VISTA ACTUAL
 let pedidosCargados = [];
 let vistaActual = "activos";
+let filtroBusqueda = "";
 
 const loginSection = document.getElementById("login-section");
 const dashboardSection = document.getElementById("dashboard-section");
@@ -216,21 +217,40 @@ const pedidosHoy = pedidos.filter(pedido => {
         euros(ventasHoy);
 
 // FILTRAR PEDIDOS SEGÚN LA PESTAÑA
-const pedidosVista = vistaActual === "activos"
+let pedidosVista = vistaActual === "activos"
     ? pedidos.filter(pedido => pedido.estado !== "Entregado")
     : pedidos.filter(pedido => pedido.estado === "Entregado");
+
+// APLICAR BUSCADOR
+if (filtroBusqueda.trim() !== "") {
+
+    const busqueda = filtroBusqueda.toLowerCase().trim();
+
+    pedidosVista = pedidosVista.filter(pedido => {
+
+        return (
+            String(pedido.numero_pedido || "").toLowerCase().includes(busqueda) ||
+            String(pedido.cliente || "").toLowerCase().includes(busqueda) ||
+            String(pedido.telefono || "").toLowerCase().includes(busqueda) ||
+            String(pedido.estado || "").toLowerCase().includes(busqueda)
+        );
+
+    });
+
+}
 
 // MENSAJE SI NO HAY PEDIDOS
 if (pedidosVista.length === 0) {
 
-    contenedor.innerHTML = vistaActual === "activos"
-        ? "<p>No hay pedidos activos.</p>"
-        : "<p>Todavía no hay pedidos entregados.</p>";
+    contenedor.innerHTML = filtroBusqueda.trim() !== ""
+        ? "<p>No se encontraron pedidos con esa búsqueda.</p>"
+        : vistaActual === "activos"
+            ? "<p>No hay pedidos activos.</p>"
+            : "<p>Todavía no hay pedidos entregados.</p>";
 
     return;
 
-}
-
+}    
 // MOSTRAR PEDIDOS
 pedidosVista.forEach(pedido => {
 
@@ -411,13 +431,25 @@ activarBotonesEstado();
 
 }
 // =====================================
+// BUSCADOR DE PEDIDOS
+// =====================================
+
+document.getElementById("buscar-pedido").addEventListener("input", function() {
+
+    filtroBusqueda = this.value;
+
+    mostrarPedidos(pedidosCargados);
+
+});     
+// =====================================
 // CAMBIAR ENTRE PEDIDOS ACTIVOS E HISTORIAL
 // =====================================
 
 document.getElementById("tab-activos").addEventListener("click", function() {
 
     vistaActual = "activos";
-
+    filtroBusqueda = "";
+document.getElementById("buscar-pedido").value = "";
     this.classList.add("active");
     document.getElementById("tab-historial").classList.remove("active");
 
@@ -431,7 +463,8 @@ document.getElementById("tab-activos").addEventListener("click", function() {
 document.getElementById("tab-historial").addEventListener("click", function() {
 
     vistaActual = "historial";
-
+filtroBusqueda = "";
+document.getElementById("buscar-pedido").value = "";
     this.classList.add("active");
     document.getElementById("tab-activos").classList.remove("active");
 
