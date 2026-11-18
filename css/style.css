@@ -1967,3 +1967,28 @@ body.cart-open {
     background: #ff6900;
     color: white;
 }
+/* FILA DE NÚMERO Y LOCALIDAD */
+.address-details-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.address-field {
+    min-width: 0;
+}
+
+.address-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ff7900;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.address-field input {
+    width: 100%;
+    box-sizing: border-box;
+}

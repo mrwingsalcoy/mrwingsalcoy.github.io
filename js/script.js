@@ -426,14 +426,32 @@ clearCartButton.addEventListener("click", function() {
     <div id="sugerencias-direccion"></div>
 
 </div>
-<label>Localidad</label>
 
-<input
-    type="text"
-    name="localidad"
-    required
-    placeholder="Escribe Alcoy o Alcoi"
->
+<div class="address-details-row">
+
+    <div class="address-field">
+        <label>Número de portal</label>
+        <input
+            type="text"
+            name="numero"
+            required
+            placeholder="Ej. 25, 3 A"
+        >
+    </div>
+
+<div class="address-field">
+    <label>Localidad</label>
+    <input
+        type="text"
+        name="localidad"
+        required
+        value="Alcoy"
+        placeholder="Alcoy"
+        readonly
+    >
+</div>
+
+</div>
 
 <small class="delivery-notice">
     📍 Actualmente realizamos entregas únicamente en Alcoy.
@@ -475,9 +493,10 @@ campoDireccion.addEventListener("input", function () {
 
             const parametros = new URLSearchParams({
                 q: busqueda,
-                limit: 6,
-                lang: "default",
-                bbox: "-0.55,38.65,-0.40,38.78"
+                limit: 10,
+lang: "default",
+bbox: "-0.55,38.65,-0.40,38.78",
+suggest_addresses: true
             });
 
             const respuesta = await fetch(
@@ -548,6 +567,7 @@ if (!/^\+?[0-9]{9,15}$/.test(telefonoLimpio)) {
     return;
 }
             const direccion = datos.get("direccion");
+            const numero = datos.get("numero");
             // VALIDAR DIRECCIÓN
 if (direccion.trim().length < 5) {
     alert("Por favor, introduce una dirección de entrega válida.");
@@ -573,7 +593,7 @@ if (localidadNormalizada !== "alcoy" &&
 
             mensaje += `👤 Cliente: ${nombre}\n`;
             mensaje += `📱 Teléfono: ${telefonoCliente}\n`;
-            mensaje += `📍 Dirección: ${direccion}\n`;
+            mensaje += `📍 Dirección: ${direccion}, Nº ${numero}, ${localidad}\n`;
             mensaje += `🏙️ Localidad: ${localidad}\n`;
 
             if (piso) {
