@@ -169,11 +169,9 @@ const pedidosHoy = pedidos.filter(pedido => {
     const fechaPedido = String(pedido.fecha || "");
 
     const fechaHoy = new Intl.DateTimeFormat("es-ES", {
-        timeZone: "Europe/Madrid",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    }).format(new Date());
+    timeZone: "Europe/Madrid",
+    dateStyle: "short"
+}).format(new Date());
 
     return fechaPedido.startsWith(fechaHoy);
 
