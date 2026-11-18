@@ -547,6 +547,8 @@ suggest_addresses: true
         nuevoFormulario.addEventListener("submit", async function(event) {
 
             event.preventDefault();
+        // ABRIR PESTAÑA PARA EVITAR BLOQUEO DEL NAVEGADOR
+const ventanaWhatsApp = window.open("about:blank", "_blank");
 
             const datos = new FormData(nuevoFormulario);
 
@@ -725,8 +727,50 @@ mensaje += "\n🙏 ¡Gracias por elegir MrWingsAlcoy!";
 
             // ABRIR WHATSAPP CON EL PEDIDO
 const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+// GUARDAR PEDIDO EN CLOUDFLARE
+try {
 
-window.open(url, "_blank");
+    const respuestaGuardar = await fetch(
+        "https://misty-tooth-6094.oquijandriagarcia.workers.dev/",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "guardar",
+                pedido: {
+                    numeroPedido: numeroPedido,
+                    fecha: fechaHoraPedido,
+                    cliente: nombre,
+                    telefono: telefonoCliente,
+                    direccion: piso
+                        ? `${direccionCompleta}, Piso/Puerta: ${piso}`
+                        : direccionCompleta,
+                    productos: {
+                        items: carrito,
+                        observaciones: observaciones
+                    },
+                    total: total
+                }
+            })
+        }
+    );
+
+    if (!respuestaGuardar.ok) {
+        throw new Error("No se pudo guardar el pedido");
+    }
+
+} catch (error) {
+
+    console.error("Error al guardar el pedido:", error);
+
+    ventanaWhatsApp.close();
+
+    alert("No se pudo registrar tu pedido. Inténtalo nuevamente.");
+    return;
+}
+ventanaWhatsApp.location.href = url;
 // DETECTAR CUANDO EL CLIENTE REGRESA DE WHATSAPP
 let salioDeLaWeb = false;
 
