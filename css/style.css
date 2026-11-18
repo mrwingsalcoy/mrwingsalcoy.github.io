@@ -1787,3 +1787,33 @@ body.cart-open {
     cursor: not-allowed;
     opacity: 0.7;
 }
+/* CARRITO FLOTANTE EN MÓVILES */
+@media (max-width: 768px) {
+
+    .cart-float {
+        width: 52px;
+        height: 52px;
+        right: 12px;
+        bottom: 100px;
+        font-size: 23px;
+    }
+
+    #cart-count {
+        width: 21px;
+        height: 21px;
+        font-size: 12px;
+    }
+
+}
+/* WHATSAPP EN MÓVILES */
+@media (max-width: 768px) {
+
+    .whatsapp-button {
+        right: 12px;
+        bottom: 20px;
+        padding: 12px 18px;
+        font-size: 14px;
+        border-radius: 50px;
+    }
+
+}
