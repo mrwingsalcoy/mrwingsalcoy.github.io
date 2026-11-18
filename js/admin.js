@@ -3,6 +3,9 @@
 // =====================================
 
 const API_URL = "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
+// PEDIDOS Y VISTA ACTUAL
+let pedidosCargados = [];
+let vistaActual = "activos";
 
 const loginSection = document.getElementById("login-section");
 const dashboardSection = document.getElementById("dashboard-section");
@@ -127,7 +130,11 @@ async function cargarPedidos() {
             throw new Error("No se pudieron cargar los pedidos");
         }
 
-        mostrarPedidos(resultado.pedidos);
+        // GUARDAR TODOS LOS PEDIDOS
+        pedidosCargados = resultado.pedidos;
+
+        // MOSTRAR LA VISTA ACTUAL
+        mostrarPedidos(pedidosCargados);
 
     } catch(error) {
 
@@ -153,12 +160,18 @@ async function cargarPedidos() {
     }
 
 }
-
 // =====================================
 // MOSTRAR PEDIDOS Y ESTADÍSTICAS
 // =====================================
 
 function mostrarPedidos(pedidos) {
+
+    // SELECCIONAR CONTENEDOR SEGÚN LA PESTAÑA
+    const contenedor = vistaActual === "activos"
+        ? ordersContainer
+        : document.getElementById("history-container");
+
+    contenedor.innerHTML = "";
 
 const ahora = new Date();
 
@@ -202,19 +215,24 @@ const pedidosHoy = pedidos.filter(pedido => {
     document.getElementById("ventas-hoy").textContent =
         euros(ventasHoy);
 
-    ordersContainer.innerHTML = "";
+// FILTRAR PEDIDOS SEGÚN LA PESTAÑA
+const pedidosVista = vistaActual === "activos"
+    ? pedidos.filter(pedido => pedido.estado !== "Entregado")
+    : pedidos.filter(pedido => pedido.estado === "Entregado");
 
-    if (pedidos.length === 0) {
+// MENSAJE SI NO HAY PEDIDOS
+if (pedidosVista.length === 0) {
 
-        ordersContainer.innerHTML = "<p>Todavía no hay pedidos registrados.</p>";
+    contenedor.innerHTML = vistaActual === "activos"
+        ? "<p>No hay pedidos activos.</p>"
+        : "<p>Todavía no hay pedidos entregados.</p>";
 
-        return;
+    return;
 
-    }
+}
 
-    pedidos
-.filter(pedido => pedido.estado !== "Entregado")
-.forEach(pedido => {
+// MOSTRAR PEDIDOS
+pedidosVista.forEach(pedido => {
 
         const tarjeta = document.createElement("div");
 
@@ -309,13 +327,44 @@ const pedidosHoy = pedidos.filter(pedido => {
             </button>
         `;
 
-        ordersContainer.appendChild(tarjeta);
+        ocontenedor.appendChild(tarjeta);
 
     });
 
     activarBotonesEstado();
 
 }
+// =====================================
+// CAMBIAR ENTRE PEDIDOS ACTIVOS E HISTORIAL
+// =====================================
+
+document.getElementById("tab-activos").addEventListener("click", function() {
+
+    vistaActual = "activos";
+
+    this.classList.add("active");
+    document.getElementById("tab-historial").classList.remove("active");
+
+    ordersContainer.hidden = false;
+    document.getElementById("history-container").hidden = true;
+
+    mostrarPedidos(pedidosCargados);
+
+});
+
+document.getElementById("tab-historial").addEventListener("click", function() {
+
+    vistaActual = "historial";
+
+    this.classList.add("active");
+    document.getElementById("tab-activos").classList.remove("active");
+
+    ordersContainer.hidden = true;
+    document.getElementById("history-container").hidden = false;
+
+    mostrarPedidos(pedidosCargados);
+
+});
 
 // =====================================
 // ACTUALIZAR ESTADO

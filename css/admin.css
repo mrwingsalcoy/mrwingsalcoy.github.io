@@ -168,3 +168,37 @@ body {
         padding: 22px;
     }
 }
+/* PESTAÑAS DE PEDIDOS */
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-tab {
+    flex: 1;
+    padding: 13px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #202020;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin-tab:hover {
+    border-color: #ff6b00;
+}
+
+.admin-tab.active {
+    background: #ff6b00;
+    border-color: #ff6b00;
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .admin-tabs {
+        flex-direction: column;
+    }
+}
