@@ -86,6 +86,26 @@ document.addEventListener("keydown", function(event) {
                     unidades: 1
                 });
             }
+
+            actualizarCarrito();
+// MOSTRAR NOTIFICACIÓN
+cartNotification.textContent = `✓ ¡${sabor} añadido al carrito!`;
+cartNotification.classList.add("show");
+
+clearTimeout(notificationTimer);
+
+notificationTimer = setTimeout(() => {
+    cartNotification.classList.remove("show");
+}, 2500);
+            this.textContent = "✓ AÑADIDO";
+
+            setTimeout(() => {
+                this.textContent = "🛒 AÑADIR AL CARRITO";
+            }, 1200);
+
+        });
+
+    });
 // AÑADIR COMBOS AL CARRITO
 
 document.querySelectorAll(".add-combo").forEach(boton => {
@@ -103,7 +123,7 @@ document.querySelectorAll(".add-combo").forEach(boton => {
         if (existente) {
             existente.unidades++;
         } else {
-            carrito.push({
+                carrito.push({
                 sabor: nombre,
                 descripcion: descripcion,
                 precio: precio,
@@ -128,26 +148,6 @@ document.querySelectorAll(".add-combo").forEach(boton => {
     });
 
 });
-            actualizarCarrito();
-// MOSTRAR NOTIFICACIÓN
-cartNotification.textContent = `✓ ¡${sabor} añadido al carrito!`;
-cartNotification.classList.add("show");
-
-clearTimeout(notificationTimer);
-
-notificationTimer = setTimeout(() => {
-    cartNotification.classList.remove("show");
-}, 2500);
-            this.textContent = "✓ AÑADIDO";
-
-            setTimeout(() => {
-                this.textContent = "🛒 AÑADIR AL CARRITO";
-            }, 1200);
-
-        });
-
-    });
-
     // MOSTRAR CARRITO
     function actualizarCarrito() {
 localStorage.setItem("mrwingsCarrito", JSON.stringify(carrito));
@@ -367,6 +367,7 @@ if (localidadNormalizada !== "alcoy" &&
             mensaje += `👤 Cliente: ${nombre}\n`;
             mensaje += `📱 Teléfono: ${telefonoCliente}\n`;
             mensaje += `📍 Dirección: ${direccion}\n`;
+            mensaje += `🏙️ Localidad: ${localidad}\n`;
 
             if (piso) {
                 mensaje += `🏠 Piso y puerta: ${piso}\n`;
