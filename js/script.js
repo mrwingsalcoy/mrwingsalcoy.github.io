@@ -544,7 +544,7 @@ suggest_addresses: true
         nuevoFormulario.scrollIntoView({ behavior: "smooth" });
 
         // ENVIAR PEDIDO A WHATSAPP
-        nuevoFormulario.addEventListener("submit", function(event) {
+        nuevoFormulario.addEventListener("submit", async function(event) {
 
             event.preventDefault();
 
@@ -597,8 +597,45 @@ mensaje += `Nombre: ${nombre}\n`;
 mensaje += `Teléfono: ${telefonoCliente}\n\n`;
 
 mensaje += "📍 *DIRECCIÓN DE ENTREGA*\n";
-mensaje += `${direccion}, Nº ${numero}, ${localidad}\n`;
+const calleSinCodigoPostal = direccion
+    .replace(/\b\d{5}\b/g, "")
+    .replace(/,\s*,/g, ",")
+    .replace(/,\s*$/, "")
+    .replace(/^\s*,/, "")
+    .trim();
 
+const direccionCompleta = `${direccion}, Nº ${numero}, ${localidad}`;
+
+const direccionMaps = `${numero} ${calleSinCodigoPostal}, ${localidad}, Alicante, España`;
+
+let enlaceMaps = `https://maps.google.com/?q=${encodeURIComponent(direccionMaps)}`;
+
+try {
+    const respuestaMaps = await fetch(
+        "https://misty-tooth-6094.oquijandriagarcia.workers.dev/",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: enlaceMaps
+            })
+        }
+    );
+
+    const resultadoMaps = await respuestaMaps.json();
+
+    if (respuestaMaps.ok && resultadoMaps.shortUrl) {
+        enlaceMaps = resultadoMaps.shortUrl;
+    }
+
+} catch (error) {
+    console.error("Error al acortar el enlace:", error);
+}
+
+mensaje += `${direccionCompleta}\n`;
+mensaje += `📍 Ubicación: ${enlaceMaps}\n`;
             if (piso) {
                 mensaje += `🏠 Piso y puerta: ${piso}\n`;
             }
