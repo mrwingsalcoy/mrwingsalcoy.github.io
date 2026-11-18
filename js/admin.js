@@ -180,42 +180,97 @@ const partesHoy = new Intl.DateTimeFormat("es-ES", {
     timeZone: "Europe/Madrid",
     day: "2-digit",
     month: "2-digit",
-    year: "2-digit"
+    year: "numeric"
 }).formatToParts(ahora);
 
-const diaHoy = partesHoy.find(p => p.type === "day").value;
-const mesHoy = partesHoy.find(p => p.type === "month").value;
-const anioHoy = partesHoy.find(p => p.type === "year").value;
+const diaHoy = Number(partesHoy.find(p => p.type === "day").value);
+const mesHoy = Number(partesHoy.find(p => p.type === "month").value);
+const anioHoy = Number(partesHoy.find(p => p.type === "year").value);
 
-const pedidosHoy = pedidos.filter(pedido => {
+// FECHA DE HOY EN FORMATO YYYY-MM-DD
+const fechaHoy = `${anioHoy}-${String(mesHoy).padStart(2, "0")}-${String(diaHoy).padStart(2, "0")}`;
 
-    const fechaPedido = String(pedido.fecha || "");
+// CALCULAR AYER
+const fechaAyerDate = new Date(Date.UTC(anioHoy, mesHoy - 1, diaHoy - 1));
+const fechaAyer = fechaAyerDate.toISOString().slice(0, 10);
 
-    const coincidencia = fechaPedido.match(
+// CALCULAR LOS ÚLTIMOS 7 DÍAS, INCLUYENDO HOY
+const fechasSemana = [];
+
+for (let i = 0; i < 7; i++) {
+    const fecha = new Date(Date.UTC(anioHoy, mesHoy - 1, diaHoy - i));
+    fechasSemana.push(fecha.toISOString().slice(0, 10));
+}
+
+// CONVERTIR FECHA DEL PEDIDO A YYYY-MM-DD
+function obtenerFechaPedido(fechaTexto) {
+
+    const coincidencia = String(fechaTexto || "").match(
         /^(\d{2})\/(\d{2})\/(\d{2,4})/
     );
 
-    if (!coincidencia) return false;
+    if (!coincidencia) return null;
 
-    return (
-        coincidencia[1] === diaHoy &&
-        coincidencia[2] === mesHoy &&
-        coincidencia[3].slice(-2) === anioHoy
-    );
+    const dia = coincidencia[1];
+    const mes = coincidencia[2];
+    let anio = coincidencia[3];
 
-});
+    if (anio.length === 2) {
+        anio = "20" + anio;
+    }
 
-    const ventasHoy = pedidosHoy.reduce(
-        (total, pedido) => total + Number(pedido.total || 0),
-        0
-    );
+    return `${anio}-${mes}-${dia}`;
+}
 
-    document.getElementById("total-pedidos").textContent =
-        pedidosHoy.length;
+// PEDIDOS DE HOY
+const pedidosHoy = pedidos.filter(pedido =>
+    obtenerFechaPedido(pedido.fecha) === fechaHoy
+);
 
-    document.getElementById("ventas-hoy").textContent =
-        euros(ventasHoy);
+// VENTAS DE HOY
+const ventasHoy = pedidosHoy.reduce(
+    (total, pedido) => total + Number(pedido.total || 0),
+    0
+);
 
+// VENTAS DE AYER
+const ventasAyer = pedidos
+    .filter(pedido => obtenerFechaPedido(pedido.fecha) === fechaAyer)
+    .reduce((total, pedido) => total + Number(pedido.total || 0), 0);
+
+// VENTAS DE LOS ÚLTIMOS 7 DÍAS
+const ventasSemana = pedidos
+    .filter(pedido => fechasSemana.includes(obtenerFechaPedido(pedido.fecha)))
+    .reduce((total, pedido) => total + Number(pedido.total || 0), 0);
+
+// PEDIDOS ENTREGADOS
+const pedidosEntregados = pedidos.filter(
+    pedido => pedido.estado === "Entregado"
+);
+
+// TICKET MEDIO DE PEDIDOS ENTREGADOS
+const ventasEntregadas = pedidosEntregados.reduce(
+    (total, pedido) => total + Number(pedido.total || 0),
+    0
+);
+
+const ticketMedio = pedidosEntregados.length > 0
+    ? ventasEntregadas / pedidosEntregados.length
+    : 0;
+
+// ACTUALIZAR ESTADÍSTICAS EN PANTALLA
+document.getElementById("total-pedidos").textContent = pedidosHoy.length;
+
+document.getElementById("ventas-hoy").textContent = euros(ventasHoy);
+
+document.getElementById("ventas-ayer").textContent = euros(ventasAyer);
+
+document.getElementById("ventas-semana").textContent = euros(ventasSemana);
+
+document.getElementById("pedidos-entregados").textContent =
+    pedidosEntregados.length;
+
+document.getElementById("ticket-medio").textContent = euros(ticketMedio);
 // FILTRAR PEDIDOS SEGÚN LA PESTAÑA
 let pedidosVista = vistaActual === "activos"
     ? pedidos.filter(pedido => pedido.estado !== "Entregado")
