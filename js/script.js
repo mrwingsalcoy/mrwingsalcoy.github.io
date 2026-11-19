@@ -851,7 +851,7 @@ estrellas.forEach(boton => {
 
 // ENVIAR OPINIÓN
 const formularioOpinion = document.getElementById("form-opinion");
-
+if (formularioOpinion) {
 formularioOpinion.addEventListener("submit", async function(event) {
 
     event.preventDefault();
@@ -917,7 +917,7 @@ formularioOpinion.addEventListener("submit", async function(event) {
     }
 
 });
-
+}
 // =====================================
 // CARGAR OPINIONES APROBADAS
 // =====================================
@@ -980,7 +980,9 @@ async function cargarOpiniones() {
 
 }
 
-cargarOpiniones();
+if (document.getElementById("lista-opiniones")) {
+    cargarOpiniones();
+}
 // =========================================
 // ESTADO DEL NEGOCIO - HORARIO DE ATENCIÓN
 // =========================================
@@ -1026,8 +1028,10 @@ function comprobarHorario() {
     }
 }
 
-comprobarHorario();
-setInterval(comprobarHorario, 60000);
+if (indicador) {
+    comprobarHorario();
+    setInterval(comprobarHorario, 60000);
+}
     // =========================================
     // ANIMACIONES AL DESPLAZARSE
     // =========================================
