@@ -29,6 +29,7 @@
     <div class="container">
 
         <a class="navbar-brand" href="#inicio">
+            <img src="img/logo.png" alt="MrWingsAlcoy">
             MR<span>WINGS</span>ALCOY
         </a>
 
@@ -50,7 +51,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#carta">NUESTRA CARTA</a>
+                    <a class="nav-link" href="pedidos.html">NUESTRA CARTA</a>
                 </li>
 
                 <li class="nav-item">
@@ -62,11 +63,8 @@
                 </li>
 
                 <li class="nav-item ms-lg-3">
-                    <a href="https://wa.me/34611210874"
-                       class="btn-navbar"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        🔥 PEDIR AHORA
+                    <a href="pedidos.html" class="btn-navbar">
+                        🛒 PIDE ONLINE
                     </a>
                 </li>
 
@@ -360,7 +358,69 @@
 
     </div>
 </section>
+<!-- PÁGINA DE PEDIDOS -->
+<main class="orders-page">
 
+    <div class="orders-header">
+        <h1>HAZ TU PEDIDO</h1>
+        <p>Elige tus favoritos y disfruta de MrWingsAlcoy.</p>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <nav class="order-categories">
+
+        <button class="category-tab active" data-category="alitas">
+            🍗 ESCOGE TUS ALITAS
+        </button>
+
+        <button class="category-tab" data-category="salsas">
+            🌶️ SALSAS ADICIONALES
+        </button>
+
+        <button class="category-tab" data-category="postres">
+            🍰 POSTRES
+        </button>
+
+        <button class="category-tab" data-category="bebidas">
+            🥤 BEBIDAS
+        </button>
+
+        <button class="category-tab" data-category="combos">
+            🔥 COMBOS
+        </button>
+
+    </nav>
+
+    <!-- CONTENIDO DE CATEGORÍAS -->
+    <section id="category-alitas" class="category-content active">
+
+        <h2>ESCOGE TUS ALITAS</h2>
+
+        <div class="row g-4">
+
+            <!-- AQUÍ AÑADIREMOS LAS TARJETAS DE ALITAS -->
+
+        </div>
+
+    </section>
+
+    <section id="category-salsas" class="category-content" hidden>
+        <h2>SALSAS ADICIONALES</h2>
+    </section>
+
+    <section id="category-postres" class="category-content" hidden>
+        <h2>POSTRES</h2>
+    </section>
+
+    <section id="category-bebidas" class="category-content" hidden>
+        <h2>BEBIDAS</h2>
+    </section>
+
+    <section id="category-combos" class="category-content" hidden>
+        <h2>COMBOS</h2>
+    </section>
+
+</main>
 <!-- NOTIFICACIÓN DEL CARRITO -->
 
 <div id="cart-notification" class="cart-notification">

@@ -15,7 +15,184 @@
 </head>
 
 <body>
+<!-- CABECERA DE PEDIDOS -->
+<header class="orders-topbar">
+    <a href="index.html" class="orders-logo">
+        <img src="img/logo.png" alt="MrWingsAlcoy">
+    </a>
 
+    <a href="index.html" class="back-home">
+        VOLVER AL INICIO
+    </a>
+</header>
+
+    <div class="orders-header">
+        <h1>HAZ TU PEDIDO</h1>
+        <p>Elige tus favoritos y disfruta de MrWingsAlcoy.</p>
+    </div>
+
+    <nav class="order-categories">
+
+        <button class="category-tab active" data-category="alitas">
+            🍗 ESCOGE TUS ALITAS
+        </button>
+
+        <button class="category-tab" data-category="salsas">
+            🌶️ SALSAS ADICIONALES
+        </button>
+
+        <button class="category-tab" data-category="postres">
+            🍰 POSTRES
+        </button>
+
+        <button class="category-tab" data-category="bebidas">
+            🥤 BEBIDAS
+        </button>
+
+        <button class="category-tab" data-category="combos">
+            🔥 COMBOS
+        </button>
+
+    </nav>
+
+    <section id="category-alitas" class="category-content active">
+
+             <div class="row g-4">
+
+            <!-- BBQ -->
+<div class="col-md-6 col-lg-4">
+    <div class="flavor-card">
+        <img src="img/bbq.jpg" alt="Alitas BBQ">
+
+        <div class="flavor-info">
+            <h3>BBQ</h3>
+            <p>El auténtico sabor ahumado que conquista desde el primer bocado. 🔥</p>
+
+            <div class="product-buy">
+                <select class="quantity-select" aria-label="Cantidad de alitas BBQ">
+                    <option value="6">6 alitas — 6,50 €</option>
+                    <option value="12">12 alitas — 12,00 €</option>
+                    <option value="18">18 alitas — 17,50 €</option>
+                </select>
+
+                <button class="btn-flavor-order add-to-cart" data-name="BBQ">
+                    🛒 AÑADIR AL CARRITO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BRAVAS -->
+<div class="col-md-6 col-lg-4">
+    <div class="flavor-card">
+        <img src="img/bravas.jpg" alt="Alitas Bravas">
+
+        <div class="flavor-info">
+            <h3>BRAVAS</h3>
+            <p>Un toque picante y lleno de sabor para los amantes de las emociones fuertes. 🌶️</p>
+
+            <div class="product-buy">
+                <select class="quantity-select" aria-label="Cantidad de alitas Bravas">
+                    <option value="6">6 alitas — 6,50 €</option>
+                    <option value="12">12 alitas — 12,00 €</option>
+                    <option value="18">18 alitas — 17,50 €</option>
+                </select>
+
+                <button class="btn-flavor-order add-to-cart" data-name="BRAVAS">
+                    🛒 AÑADIR AL CARRITO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ACEVICHADAS -->
+<div class="col-md-6 col-lg-4">
+    <div class="flavor-card">
+        <img src="img/acevichadas.jpg" alt="Alitas Acevichadas">
+
+        <div class="flavor-info">
+            <h3>ACEVICHADAS</h3>
+            <p>Una combinación irresistible con el toque fresco y único de nuestra salsa acevichada. 🍋</p>
+
+            <div class="product-buy">
+                <select class="quantity-select" aria-label="Cantidad de alitas Acevichadas">
+                    <option value="6">6 alitas — 7,00 €</option>
+                    <option value="12">12 alitas — 13,00 €</option>
+                    <option value="18">18 alitas — 19,00 €</option>
+                </select>
+
+                <button class="btn-flavor-order add-to-cart" data-name="ACEVICHADAS">
+                    🛒 AÑADIR AL CARRITO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MARACUYÁ -->
+<div class="col-md-6 col-lg-4">
+    <div class="flavor-card">
+        <img src="img/maracuya.jpg" alt="Alitas Maracuyá">
+
+        <div class="flavor-info">
+            <h3>MARACUYÁ</h3>
+            <p>El equilibrio perfecto entre dulzura y un toque tropical que sorprende. 🍍</p>
+
+            <div class="product-buy">
+                <select class="quantity-select" aria-label="Cantidad de alitas Maracuyá">
+                    <option value="6">6 alitas — 7,00 €</option>
+                    <option value="12">12 alitas — 13,00 €</option>
+                    <option value="18">18 alitas — 19,00 €</option>
+                </select>
+
+                <button class="btn-flavor-order add-to-cart" data-name="MARACUYÁ">
+                    🛒 AÑADIR AL CARRITO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TRUFADAS -->
+<div class="col-md-6 col-lg-4">
+    <div class="flavor-card">
+        <img src="img/trufadas.jpg" alt="Alitas Trufadas">
+
+        <div class="flavor-info">
+            <h3>TRUFADAS</h3>
+            <p>Un sabor elegante e intenso con nuestra irresistible salsa de trufa. 🍄</p>
+
+            <div class="product-buy">
+                <select class="quantity-select" aria-label="Cantidad de alitas Trufadas">
+                    <option value="6">6 alitas — 7,50 €</option>
+                    <option value="12">12 alitas — 14,00 €</option>
+                    <option value="18">18 alitas — 20,00 €</option>
+                </select>
+
+                <button class="btn-flavor-order add-to-cart" data-name="TRUFADAS">
+                    🛒 AÑADIR AL CARRITO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+
+    <section id="category-salsas" class="category-content" hidden>
+        <h2>SALSAS ADICIONALES</h2>
+    </section>
+
+    <section id="category-postres" class="category-content" hidden>
+        <h2>POSTRES</h2>
+    </section>
+
+    <section id="category-bebidas" class="category-content" hidden>
+        <h2>BEBIDAS</h2>
+    </section>
+
+    <section id="category-combos" class="category-content" hidden>
+        <h2>COMBOS</h2>
+    </section>
+
+</main>
     <!-- NOTIFICACIÓN DEL CARRITO -->
 <div id="cart-notification" class="cart-notification">
     ✓ Producto añadido al carrito
