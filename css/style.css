@@ -474,11 +474,12 @@ footer p {
 
         /* CABECERA MÓVIL */
 
-    .navbar .container {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-    }
+  .navbar .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
 
     .navbar-brand {
         font-size: 17px;
