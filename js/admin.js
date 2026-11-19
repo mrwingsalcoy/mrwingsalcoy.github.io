@@ -763,39 +763,6 @@ document.getElementById("buscar-pedido").addEventListener("input", function() {
     mostrarPedidos(pedidosCargados);
 
 });     
-// =====================================
-// CAMBIAR ENTRE PEDIDOS ACTIVOS E HISTORIAL
-// =====================================
-
-document.getElementById("tab-activos").addEventListener("click", function() {
-
-    vistaActual = "activos";
-    filtroBusqueda = "";
-document.getElementById("buscar-pedido").value = "";
-    this.classList.add("active");
-    document.getElementById("tab-historial").classList.remove("active");
-
-    ordersContainer.hidden = false;
-    document.getElementById("history-container").hidden = true;
-
-    mostrarPedidos(pedidosCargados);
-
-});
-
-document.getElementById("tab-historial").addEventListener("click", function() {
-
-    vistaActual = "historial";
-filtroBusqueda = "";
-document.getElementById("buscar-pedido").value = "";
-    this.classList.add("active");
-    document.getElementById("tab-activos").classList.remove("active");
-
-    ordersContainer.hidden = true;
-    document.getElementById("history-container").hidden = false;
-
-    mostrarPedidos(pedidosCargados);
-
-});
 
 // =====================================
 // ACTUALIZAR ESTADO
