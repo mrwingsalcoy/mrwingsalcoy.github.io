@@ -830,21 +830,30 @@ footer p {
 ========================================= */
 
 .navbar {
-    background: #080808;
-    padding: 18px 0;
+    background: linear-gradient(180deg, #181818 0%, #050505 100%);
+    padding: 12px 0;
     border-bottom: 2px solid #ff5a00;
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
 
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-size: 27px;
     font-weight: 1000;
-    letter-spacing: 1px;
-    color: white !important;
+    letter-spacing: 1.5px;
+    color: #fff !important;
+    text-shadow: 0 2px 8px rgba(255, 90, 0, 0.2);
+    transition: transform .3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.03);
 }
 
 .navbar-brand img {
@@ -857,6 +866,7 @@ footer p {
 }
 
 .nav-link {
+    position: relative;
     color: white !important;
     font-size: 13px;
     font-weight: 900;
@@ -865,26 +875,48 @@ footer p {
     transition: .3s;
 }
 
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ff5a00;
+    transition: width .3s ease;
+}
+
+.nav-link:hover {
+    color: #ff5a00 !important;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
 .nav-link:hover {
     color: #ff5a00 !important;
 }
 
 .btn-navbar {
     display: inline-block;
-    background: #ff5a00;
+    background: linear-gradient(135deg, #ff7300, #ff4500);
     color: white;
-    padding: 13px 20px;
-    border-radius: 5px;
+    padding: 14px 24px;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 13px;
     font-weight: 900;
-    transition: .3s;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 90, 0, 0.3);
+    transition: all .3s ease;
 }
 
 .btn-navbar:hover {
     background: white;
     color: #ff5a00;
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(255, 90, 0, 0.4);
 }
 
 /* MÓVILES */
