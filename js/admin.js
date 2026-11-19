@@ -114,50 +114,170 @@ document.getElementById("logout-button").addEventListener("click", function() {
 });
 
 // =====================================
-// CARGAR PEDIDOS
+// CAMBIAR ENTRE PEDIDOS Y OPINIONES
 // =====================================
 
-async function cargarPedidos() {
+const tabActivos = document.getElementById("tab-activos");
+const tabHistorial = document.getElementById("tab-historial");
+const tabOpiniones = document.getElementById("tab-opiniones");
 
-    ordersContainer.innerHTML = "<p>Cargando pedidos...</p>";
+const historyContainer = document.getElementById("history-container");
+const opinionesContainer = document.getElementById("opiniones-container");
+
+function activarPestana(pestana) {
+
+    [tabActivos, tabHistorial, tabOpiniones].forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    pestana.classList.add("active");
+}
+
+tabActivos.addEventListener("click", function() {
+
+    vistaActual = "activos";
+    filtroBusqueda = "";
+    document.getElementById("buscar-pedido").value = "";
+
+    activarPestana(this);
+
+    ordersContainer.hidden = false;
+    historyContainer.hidden = true;
+    opinionesContainer.hidden = true;
+
+    mostrarPedidos(pedidosCargados);
+
+});
+
+tabHistorial.addEventListener("click", function() {
+
+    vistaActual = "historial";
+    filtroBusqueda = "";
+    document.getElementById("buscar-pedido").value = "";
+
+    activarPestana(this);
+
+    ordersContainer.hidden = true;
+    historyContainer.hidden = false;
+    opinionesContainer.hidden = true;
+
+    mostrarPedidos(pedidosCargados);
+
+});
+
+tabOpiniones.addEventListener("click", function() {
+
+    activarPestana(this);
+
+    ordersContainer.hidden = true;
+    historyContainer.hidden = true;
+    opinionesContainer.hidden = false;
+
+    cargarOpinionesAdmin();
+
+});
+
+// =====================================
+// CARGAR OPINIONES EN ADMINISTRACIÓN
+// =====================================
+
+async function cargarOpinionesAdmin() {
+
+    opinionesContainer.innerHTML = "<p>Cargando opiniones...</p>";
 
     try {
 
         const resultado = await llamarAPI({
-            action: "admin_list",
+            action: "opiniones_admin_list",
             token: token
         });
 
         if (!resultado.success) {
-            throw new Error("No se pudieron cargar los pedidos");
+            throw new Error("No se pudieron cargar las opiniones.");
         }
 
-        // GUARDAR TODOS LOS PEDIDOS
-        pedidosCargados = resultado.pedidos;
+        opinionesContainer.replaceChildren();
 
-        // MOSTRAR LA VISTA ACTUAL
-        mostrarPedidos(pedidosCargados);
+        if (!resultado.opiniones.length) {
+            opinionesContainer.textContent = "Todavía no hay opiniones recibidas.";
+            return;
+        }
+
+        resultado.opiniones.forEach(opinion => {
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "opinion-admin-card";
+
+            const nombre = document.createElement("h3");
+            nombre.textContent = opinion.nombre;
+
+            const estrellas = document.createElement("p");
+            estrellas.className = "opinion-estrellas";
+            estrellas.textContent = "★".repeat(Number(opinion.valoracion));
+
+            const comentario = document.createElement("p");
+            comentario.textContent = opinion.comentario;
+
+            const estado = document.createElement("p");
+            estado.textContent = "Estado: " + opinion.estado;
+
+            const botones = document.createElement("div");
+            botones.className = "opinion-admin-botones";
+
+            const aprobar = document.createElement("button");
+            aprobar.textContent = "✅ Aprobar";
+
+            aprobar.addEventListener("click", () => {
+                actualizarEstadoOpinion(opinion.id, "Aprobada");
+            });
+
+            const rechazar = document.createElement("button");
+            rechazar.textContent = "❌ Rechazar";
+
+            rechazar.addEventListener("click", () => {
+                actualizarEstadoOpinion(opinion.id, "Rechazada");
+            });
+
+            botones.append(aprobar, rechazar);
+
+            tarjeta.append(nombre, estrellas, comentario, estado, botones);
+
+            opinionesContainer.appendChild(tarjeta);
+
+        });
 
     } catch(error) {
 
-        ordersContainer.innerHTML = "";
+        opinionesContainer.textContent = error.message;
 
-        if (error.message.includes("Sesión")) {
+    }
 
-            sessionStorage.removeItem("mrwings_admin_token");
+}
 
-            token = null;
+// =====================================
+// ACTUALIZAR ESTADO DE UNA OPINIÓN
+// =====================================
 
-            dashboardSection.hidden = true;
-            loginSection.hidden = false;
+async function actualizarEstadoOpinion(id, estado) {
 
-            loginError.textContent = "Tu sesión ha caducado. Inicia sesión nuevamente.";
+    try {
 
-        } else {
+        const resultado = await llamarAPI({
+            action: "opiniones_admin_update",
+            token: token,
+            id: id,
+            estado: estado
+        });
 
-            ordersContainer.textContent = error.message;
-
+        if (!resultado.success) {
+            throw new Error("No se pudo actualizar la opinión.");
         }
+
+        await cargarOpinionesAdmin();
+
+    } catch(error) {
+
+        alert(error.message);
 
     }
 

@@ -337,3 +337,67 @@ body {
     background: #106638;
     transform: translateY(-2px);
 }
+/* =====================================
+   OPINIONES EN ADMINISTRACIÓN
+===================================== */
+
+.opinion-admin-card {
+    background: #222;
+    border: 1px solid rgba(255, 90, 0, .3);
+    border-radius: 14px;
+    padding: 22px;
+    margin: 15px 0;
+    box-shadow: 0 5px 18px rgba(0,0,0,.25);
+}
+
+.opinion-admin-card h3 {
+    color: #ff5a00;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.opinion-admin-card .opinion-estrellas {
+    color: #ffb400;
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.opinion-admin-card p {
+    color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.opinion-admin-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.opinion-admin-botones button {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-weight: 800;
+    cursor: pointer;
+    color: #fff;
+}
+
+.opinion-admin-botones button:first-child {
+    background: #16834a;
+}
+
+.opinion-admin-botones button:last-child {
+    background: #b52b2b;
+}
+
+@media (max-width: 600px) {
+    .opinion-admin-card {
+        padding: 17px;
+    }
+
+    .opinion-admin-botones button {
+        flex: 1;
+    }
+}
