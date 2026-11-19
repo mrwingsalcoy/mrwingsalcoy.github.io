@@ -41,7 +41,54 @@ async function llamarAPI(datos) {
 
     return resultado;
 }
+// =====================================
+// CARGAR PEDIDOS
+// =====================================
 
+async function cargarPedidos() {
+
+    ordersContainer.innerHTML = "<p>Cargando pedidos...</p>";
+
+    try {
+
+        const resultado = await llamarAPI({
+            action: "admin_list",
+            token: token
+        });
+
+        if (!resultado.success) {
+            throw new Error("No se pudieron cargar los pedidos");
+        }
+
+        pedidosCargados = resultado.pedidos;
+
+        mostrarPedidos(pedidosCargados);
+
+    } catch(error) {
+
+        ordersContainer.innerHTML = "";
+
+        if (error.message.includes("Sesión")) {
+
+            sessionStorage.removeItem("mrwings_admin_token");
+
+            token = null;
+
+            dashboardSection.hidden = true;
+            loginSection.hidden = false;
+
+            loginError.textContent =
+                "Tu sesión ha caducado. Inicia sesión nuevamente.";
+
+        } else {
+
+            ordersContainer.textContent = error.message;
+
+        }
+
+    }
+
+}
 // =====================================
 // INICIAR SESIÓN
 // =====================================
