@@ -814,6 +814,173 @@ document.addEventListener(
     });
 
     actualizarCarrito();
+    // =====================================
+// SISTEMA DE OPINIONES MRWINGSALCOY
+// =====================================
+
+const URL_WORKER =
+    "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
+
+// SELECCIÓN DE ESTRELLAS
+const estrellas = document.querySelectorAll(
+    ".selector-estrellas button"
+);
+
+const valoracionInput = document.getElementById(
+    "opinion-valoracion"
+);
+
+estrellas.forEach(boton => {
+
+    boton.addEventListener("click", function() {
+
+        const valor = Number(this.dataset.valor);
+
+        valoracionInput.value = valor;
+
+        estrellas.forEach(estrella => {
+            estrella.classList.toggle(
+                "activa",
+                Number(estrella.dataset.valor) <= valor
+            );
+        });
+
+    });
+
+});
+
+// ENVIAR OPINIÓN
+const formularioOpinion = document.getElementById("form-opinion");
+
+formularioOpinion.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const nombre = document.getElementById("opinion-nombre").value.trim();
+    const comentario = document.getElementById("opinion-comentario").value.trim();
+    const valoracion = Number(valoracionInput.value);
+    const mensaje = document.getElementById("mensaje-opinion");
+    const botonEnviar = formularioOpinion.querySelector(
+        'button[type="submit"]'
+    );
+
+    botonEnviar.disabled = true;
+    mensaje.textContent = "Enviando tu opinión...";
+
+    try {
+
+        const respuesta = await fetch(URL_WORKER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "opinion_guardar",
+                nombre: nombre,
+                comentario: comentario,
+                valoracion: valoracion
+            })
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok || !resultado.success) {
+            throw new Error(
+                resultado.error || "No se pudo enviar la opinión."
+            );
+        }
+
+        mensaje.textContent =
+            "⭐ ¡Gracias! Tu opinión está pendiente de aprobación.";
+
+        formularioOpinion.reset();
+        valoracionInput.value = 5;
+
+        estrellas.forEach(estrella => {
+            estrella.classList.toggle(
+                "activa",
+                Number(estrella.dataset.valor) <= 5
+            );
+        });
+
+    } catch (error) {
+
+        console.error("Error al enviar opinión:", error);
+
+        mensaje.textContent =
+            "No se pudo enviar tu opinión. Inténtalo nuevamente.";
+
+    } finally {
+
+        botonEnviar.disabled = false;
+
+    }
+
+});
+
+// =====================================
+// CARGAR OPINIONES APROBADAS
+// =====================================
+
+async function cargarOpiniones() {
+
+    const contenedor = document.getElementById("lista-opiniones");
+
+    try {
+
+        const respuesta = await fetch(URL_WORKER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "opiniones_publicas"
+            })
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok || !resultado.success) {
+            throw new Error("No se pudieron cargar las opiniones.");
+        }
+
+        contenedor.replaceChildren();
+
+        resultado.opiniones.forEach(opinion => {
+
+            const columna = document.createElement("div");
+            columna.className = "col-md-6 col-lg-4";
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "opinion-card";
+
+            const nombre = document.createElement("h4");
+            nombre.textContent = opinion.nombre;
+
+            const estrellas = document.createElement("div");
+            estrellas.className = "opinion-estrellas";
+            estrellas.textContent =
+                "★".repeat(Number(opinion.valoracion)) +
+                "☆".repeat(5 - Number(opinion.valoracion));
+
+            const comentario = document.createElement("p");
+            comentario.textContent = opinion.comentario;
+
+            tarjeta.append(nombre, estrellas, comentario);
+            columna.appendChild(tarjeta);
+            contenedor.appendChild(columna);
+
+        });
+
+    } catch (error) {
+
+        console.error("Error al cargar opiniones:", error);
+
+    }
+
+}
+
+cargarOpiniones();
 // =========================================
 // ESTADO DEL NEGOCIO - HORARIO DE ATENCIÓN
 // =========================================

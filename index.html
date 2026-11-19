@@ -164,7 +164,7 @@
                     <div class="flavor-info">
 
                         <h3>BBQ</h3>
-                        <p>El clásico sabor barbacoa.</p>
+                        <p>El auténtico sabor ahumado que conquista desde el primer bocado. 🔥</p>
 
                         <div class="product-buy">
 
@@ -195,7 +195,7 @@
                     <div class="flavor-info">
 
                         <h3>BRAVAS</h3>
-                        <p>Intensidad y sabor en cada bocado.</p>
+                        <p>Intensas, atrevidas y con ese toque picante que engancha. 🌶️</p>
 
                         <div class="product-buy">
 
@@ -225,7 +225,7 @@
                     <div class="flavor-info">
 
                         <h3>ACEVICHADAS</h3>
-                        <p>Un toque peruano irresistible.</p>
+                        <p>El toque peruano que despierta todos tus sentidos. 🇵🇪</p>
 
                         <div class="product-buy">
 
@@ -257,9 +257,7 @@
                         <h3>MARACUYÁ</h3>
 
                         <p>
-                            Alitas bañadas en nuestra deliciosa salsa
-                            de maracuyá, con un toque dulce y tropical
-                            que te va a encantar.
+                            Dulces, cítricas y tropicales. ¡Una explosión de sabor! 🍋.
                         </p>
 
                         <div class="product-buy">
@@ -292,8 +290,7 @@
                         <h3>TRUFADAS</h3>
 
                         <p>
-                            Alitas bañadas en una deliciosa salsa de trufa,
-                            con un sabor intenso y cremoso que te va a encantar.
+                            Elegancia, cremosidad y un sabor irresistible. ✨
                         </p>
 
                         <div class="product-buy">
@@ -523,9 +520,95 @@
 </button>
     </div>
 </div>
+  </div> <!-- Cierre de row -->
+    </div> <!-- Cierre de container -->
 </section>
 
+<!-- OPINIONES DE CLIENTES -->
+<section id="opiniones" class="opiniones-section">
 
+    <div class="container">
+
+        <div class="menu-header text-center">
+            <span class="menu-tag">VUESTRA OPINIÓN</span>
+
+            <h2 class="section-title">
+                NUESTROS CLIENTES <span>OPINAN</span>
+            </h2>
+
+            <p class="section-description">
+                Tu experiencia nos ayuda a seguir mejorando.
+            </p>
+        </div>
+
+        <div class="opiniones-resumen">
+            <div class="estrellas-generales">★★★★★</div>
+            <h3>¿Te han gustado nuestras alitas?</h3>
+            <p>Nos encantaría conocer tu experiencia.</p>
+
+            <a href="https://www.google.com/search?q=MrWingsAlcoy"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn-opinion">
+                ⭐ DEJAR MI OPINIÓN
+            </a>
+        </div>
+
+       <!-- FORMULARIO DE OPINIONES -->
+<div class="formulario-opinion">
+
+    <h3>CUÉNTANOS TU EXPERIENCIA</h3>
+
+    <form id="form-opinion">
+
+        <label for="opinion-nombre">Tu nombre</label>
+        <input
+            type="text"
+            id="opinion-nombre"
+            maxlength="40"
+            placeholder="Escribe tu nombre"
+            required
+        >
+
+        <label>Tu valoración</label>
+
+        <div class="selector-estrellas">
+            <input type="hidden" id="opinion-valoracion" value="5">
+
+            <button type="button" data-valor="1">★</button>
+            <button type="button" data-valor="2">★</button>
+            <button type="button" data-valor="3">★</button>
+            <button type="button" data-valor="4">★</button>
+            <button type="button" data-valor="5">★</button>
+        </div>
+
+        <label for="opinion-comentario">Tu comentario</label>
+
+        <textarea
+            id="opinion-comentario"
+            maxlength="500"
+            minlength="10"
+            rows="4"
+            placeholder="¿Qué te han parecido nuestras alitas?"
+            required
+        ></textarea>
+
+        <button type="submit" class="btn-opinion">
+            ENVIAR MI OPINIÓN
+        </button>
+
+        <p id="mensaje-opinion"></p>
+
+    </form>
+
+</div>
+
+<!-- OPINIONES PUBLICADAS -->
+<div id="lista-opiniones" class="row g-4"></div>
+
+    </div>
+
+</section>
 <!-- CONTACTO -->
 
 <footer id="contacto">
