@@ -474,16 +474,41 @@ footer p {
 
         /* CABECERA MÓVIL */
 
-  .navbar .container {
+  /* CABECERA MÓVIL */
+
+.navbar .container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.navbar-brand img {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+}
+
+.navbar-toggler {
+    flex: 0 0 auto;
+    margin-left: 8px;
+    padding: 6px 9px;
+}
+
 .navbar-collapse {
-    flex-basis: 100%;
+    flex: 0 0 100%;
     width: 100%;
-    flex-grow: 1;
     background: #080808;
     padding: 15px 0 20px;
 }
@@ -514,24 +539,6 @@ footer p {
     width: 90%;
     margin: 12px auto;
     text-align: center;
-}
-.navbar-brand {
-    font-size: 14px;
-    gap: 5px;
-    white-space: nowrap;
-    margin-right: 0;
-    flex-shrink: 1;
-}
-
-.navbar-brand img {
-    width: 40px;
-    height: 40px;
-}
-
-.navbar-toggler {
-    flex-shrink: 0;
-    margin-left: 8px;
-    padding: 6px 9px;
 }
     body::before {
         background-size: 90vw;
