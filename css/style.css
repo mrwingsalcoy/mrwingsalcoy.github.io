@@ -2132,6 +2132,27 @@ body.cart-open {
     background: #171717;
     border-radius: 18px;
 }
+
+/* TARJETAS DE SALSAS ADICIONALES */
+#category-salsas .flavor-card img {
+    height: 160px;
+    border-radius: 12px;
+}
+
+#category-salsas .flavor-info {
+    padding: 10px;
+}
+
+#category-salsas .flavor-info h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+#category-salsas .flavor-info p {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
 /* AJUSTES DE IMÁGENES EN MÓVILES */
 
 @media (max-width: 768px) {
@@ -2576,27 +2597,47 @@ body.cart-open {
 
 /* CATEGORÍAS */
 
+/* CATEGORÍAS DE PEDIDOS */
+
 .order-categories {
     display: flex;
     gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 40px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #333;
+    margin: 30px auto 40px;
+    padding: 15px;
+    background: #151515;
+    border: 1px solid #333;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
 .category-tab {
-    background: #202020;
+    background: #242424;
     color: #fff;
     border: 1px solid #444;
-    border-radius: 10px;
-    padding: 14px 20px;
-    font-weight: 800;
+    border-radius: 12px;
+    padding: 16px 22px;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: .5px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all .3s ease;
 }
 
+.category-tab:hover {
+    background: #333;
+    border-color: #ff5a00;
+    color: #ff5a00;
+    transform: translateY(-3px);
+}
+
+.category-tab.active {
+    background: linear-gradient(135deg, #ff7300, #ff4500);
+    border-color: #ff5a00;
+    color: white;
+    box-shadow: 0 5px 15px rgba(255,90,0,.3);
+}
 .category-tab:hover,
 .category-tab.active {
     background: #ff6b00;
@@ -2632,18 +2673,26 @@ body.cart-open {
         font-size: 2rem;
     }
 
-    .order-categories {
-        justify-content: flex-start;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 15px;
-    }
+   .order-categories {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 12px;
+    gap: 10px;
+    scrollbar-width: none;
+}
 
-    .category-tab {
-        flex-shrink: 0;
-        font-size: 0.8rem;
-        padding: 12px 14px;
-    }
+.order-categories::-webkit-scrollbar {
+    display: none;
+}
+
+.category-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 13px 16px;
+}
 }
 /* =====================================
    CABECERA PÁGINA DE PEDIDOS

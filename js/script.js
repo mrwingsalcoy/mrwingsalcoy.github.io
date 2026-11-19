@@ -10,8 +10,43 @@ document.addEventListener("DOMContentLoaded", function () {
         "BRAVAS": { 6: 6.50, 12: 12, 18: 17.50 },
         "ACEVICHADAS": { 6: 7, 12: 13, 18: 19 },
         "MARACUYÁ": { 6: 7, 12: 13, 18: 19 },
-        "TRUFADAS": { 6: 7.50, 12: 14, 18: 20 }
+        "TRUFADAS": { 6: 7.50, 12: 14, 18: 20 },
+
+    // SALSAS ADICIONALES
+    "SALSA BBQ": { 1: 0.50 },
+    "SALSA BRAVA": { 1: 0.50 },
+    "SALSA ACEVICHADA": { 1: 1.00 },
+    "SALSA TRUFADA": { 1: 1.00 },
+    "SALSA MARACUYÁ": { 1: 1.00 }
     };
+
+    // CAMBIAR ENTRE CATEGORÍAS
+    const categoryTabs = document.querySelectorAll(".category-tab");
+    const categoryContents = document.querySelectorAll(".category-content");
+
+    categoryTabs.forEach(tab => {
+        tab.addEventListener("click", function () {
+            const category = this.dataset.category;
+
+            categoryTabs.forEach(button => {
+                button.classList.remove("active");
+            });
+
+            categoryContents.forEach(section => {
+                section.classList.remove("active");
+                section.hidden = true;
+            });
+
+            this.classList.add("active");
+
+            const selectedContent = document.getElementById("category-" + category);
+
+            if (selectedContent) {
+                selectedContent.hidden = false;
+                selectedContent.classList.add("active");
+            }
+        });
+    });
 
     const telefono = "34611210874";
     let carrito = JSON.parse(localStorage.getItem("mrwingsCarrito")) || [];
