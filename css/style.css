@@ -476,27 +476,29 @@ footer p {
 
   .navbar .container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
 }
 
-    .navbar-brand {
-        font-size: 17px;
-        gap: 6px;
-        white-space: nowrap;
-        margin-right: 5px;
-    }
+.navbar-brand {
+    font-size: 14px;
+    gap: 5px;
+    white-space: nowrap;
+    margin-right: 0;
+    flex-shrink: 1;
+}
 
-    .navbar-brand img {
-        width: 42px;
-        height: 42px;
-    }
+.navbar-brand img {
+    width: 40px;
+    height: 40px;
+}
 
-    .navbar-toggler {
-        flex-shrink: 0;
-        margin-left: auto;
-    }
+.navbar-toggler {
+    flex-shrink: 0;
+    margin-left: 8px;
+    padding: 6px 9px;
+}
     body::before {
         background-size: 90vw;
         opacity: .05;
