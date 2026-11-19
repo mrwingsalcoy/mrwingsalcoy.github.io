@@ -474,8 +474,6 @@ footer p {
 
         /* CABECERA MÓVIL */
 
-  /* CABECERA MÓVIL */
-
 .navbar .container {
     display: flex;
     flex-wrap: wrap;
@@ -483,29 +481,28 @@ footer p {
     justify-content: space-between;
 }
 
-.navbar-brand {
+.navbar .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 14px;
+    gap: 4px;
+    font-size: 28px !important;
+    letter-spacing: 0;
     white-space: nowrap;
     margin: 0;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
 }
 
-.navbar-brand img {
-    width: 38px;
-    height: 38px;
+.navbar .navbar-brand img {
+    width: 60px;
+    height: 60px;
     flex-shrink: 0;
 }
 
-.navbar-toggler {
-    flex: 0 0 auto;
-    margin-left: 8px;
-    padding: 6px 9px;
+.navbar .navbar-toggler {
+    flex-shrink: 0;
+    margin-left: auto;
 }
-
 .navbar-collapse {
     flex: 0 0 100%;
     width: 100%;
