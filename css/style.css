@@ -472,6 +472,30 @@ footer p {
 
 @media (max-width: 768px) {
 
+        /* CABECERA MÓVIL */
+
+    .navbar .container {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .navbar-brand {
+        font-size: 17px;
+        gap: 6px;
+        white-space: nowrap;
+        margin-right: 5px;
+    }
+
+    .navbar-brand img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .navbar-toggler {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
     body::before {
         background-size: 90vw;
         opacity: .05;
