@@ -12,12 +12,18 @@ document.addEventListener("DOMContentLoaded", function () {
         "MARACUYÁ": { 6: 7, 12: 13, 18: 19 },
         "TRUFADAS": { 6: 7.50, 12: 14, 18: 20 },
 
-    // SALSAS ADICIONALES
+        // SALSAS ADICIONALES
     "SALSA BBQ": { 1: 0.50 },
     "SALSA BRAVA": { 1: 0.50 },
     "SALSA ACEVICHADA": { 1: 1.00 },
     "SALSA TRUFADA": { 1: 1.00 },
-    "SALSA MARACUYÁ": { 1: 1.00 }
+    "SALSA MARACUYÁ": { 1: 1.00 },
+
+    // POSTRES
+    "PASIÓN DE CHOCOLATE": { 1: 5.00 },
+    "OVERNIGHT DE MARACUYÁ": { 1: 5.00 },
+    "OVERNIGHT DE FRUTOS DEL BOSQUE": { 1: 5.00 },
+    "PASIÓN DE MARACUYÁ": { 1: 5.00 }
     };
 
     // CAMBIAR ENTRE CATEGORÍAS
@@ -338,7 +344,9 @@ if (cartCount) {
         <strong>${item.sabor}</strong>
        <p>${item.tipo === "combo"
     ? item.descripcion + " | Sabores: " + item.sabores.join(", ")
-    : item.sabor.startsWith("SALSA ")
+        : item.sabor.startsWith("SALSA ") ||
+      item.sabor.startsWith("PASIÓN ") ||
+      item.sabor.startsWith("OVERNIGHT ")
         ? ""
         : item.cantidad + " alitas"
 }</p>
