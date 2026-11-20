@@ -23,7 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
     "PASIÓN DE CHOCOLATE": { 1: 5.00 },
     "OVERNIGHT DE MARACUYÁ": { 1: 5.00 },
     "OVERNIGHT DE FRUTOS DEL BOSQUE": { 1: 5.00 },
-    "PASIÓN DE MARACUYÁ": { 1: 5.00 }
+    "PASIÓN DE MARACUYÁ": { 1: 5.00 },
+
+     // BEBIDAS
+    "COCA-COLA": { 1: 1.50, 2: 3.00, 3: 4.50 },
+    "FANTA NARANJA": { 1: 1.50, 2: 3.00, 3: 4.50 },
+    "SPRITE": { 1: 1.50, 2: 3.00, 3: 4.50 }
+
     };
 
     // CAMBIAR ENTRE CATEGORÍAS
@@ -121,11 +127,14 @@ document.addEventListener("keydown", function(event) {
                 existente.unidades += 1;
             } else {
                 carrito.push({
-                    sabor: sabor,
-                    cantidad: cantidad,
-                    precio: precio,
-                    unidades: 1
-                });
+    sabor: sabor,
+    cantidad: cantidad,
+    precio: precio,
+    unidades: 1,
+    tipo: ["COCA-COLA", "FANTA NARANJA", "SPRITE"].includes(sabor)
+        ? "bebida"
+        : "producto"
+});
             }
 
             actualizarCarrito();
@@ -344,11 +353,14 @@ if (cartCount) {
         <strong>${item.sabor}</strong>
        <p>${item.tipo === "combo"
     ? item.descripcion + " | Sabores: " + item.sabores.join(", ")
-        : item.sabor.startsWith("SALSA ") ||
-      item.sabor.startsWith("PASIÓN ") ||
-      item.sabor.startsWith("OVERNIGHT ")
-        ? ""
-        : item.cantidad + " alitas"
+    : item.tipo === "bebida"
+        ? item.cantidad + " bebida"
+        : item.sabor.startsWith("SALSA ")
+        ? item.cantidad + " salsa"
+        : item.sabor.startsWith("PASIÓN ") ||
+          item.sabor.startsWith("OVERNIGHT ")
+            ? item.cantidad + " postre"
+            : item.cantidad + " alitas"
 }</p>
 
         <div class="cart-quantity">
@@ -748,10 +760,24 @@ mensaje += "━━━━━━━━━━━━━━━━\n\n";
         mensaje += `   🔢 Cantidad: ${item.unidades}\n`;
         mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
 
-    } else {
+      } else {
 
-        mensaje += `🍗 *${item.sabor}*\n`;
-        mensaje += `   ${item.cantidad} alitas × ${item.unidades}\n`;
+        let tipoProducto = "alitas";
+        let emojiProducto = "🍗";
+
+        if (item.sabor.startsWith("SALSA ")) {
+            tipoProducto = "salsa";
+            emojiProducto = "🌶️";
+        } else if (
+            item.sabor.startsWith("PASIÓN ") ||
+            item.sabor.startsWith("OVERNIGHT ")
+        ) {
+            tipoProducto = "postre";
+            emojiProducto = "🍰";
+        }
+
+        mensaje += `${emojiProducto} *${item.sabor}*\n`;
+        mensaje += `   ${item.cantidad} ${tipoProducto} × ${item.unidades}\n`;
         mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
 
     }
