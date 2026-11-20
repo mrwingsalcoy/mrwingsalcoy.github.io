@@ -336,8 +336,12 @@ if (cartCount) {
             fila.innerHTML=`
     <div>
         <strong>${item.sabor}</strong>
-        <p>${item.tipo === "combo" ? item.descripcion + " | Sabores: " + item.sabores.join(", ") : item.cantidad + " alitas"}</p>
-        <p>Precio: ${euros(item.precio)}</p>
+       <p>${item.tipo === "combo"
+    ? item.descripcion + " | Sabores: " + item.sabores.join(", ")
+    : item.sabor.startsWith("SALSA ")
+        ? ""
+        : item.cantidad + " alitas"
+}</p>
 
         <div class="cart-quantity">
             <button type="button" class="quantity-minus" data-index="${indice}">−</button>

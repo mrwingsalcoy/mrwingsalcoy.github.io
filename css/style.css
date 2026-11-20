@@ -2132,6 +2132,15 @@ body.cart-open {
     background: #171717;
     border-radius: 18px;
 }
+/* IMÁGENES DE ALITAS */
+#category-alitas .flavor-card img {
+    width: calc(100% - 16px);
+    height: 180px;
+    margin: 8px auto;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+}
 
 /* TARJETAS DE SALSAS ADICIONALES */
 #category-salsas .flavor-card img {
