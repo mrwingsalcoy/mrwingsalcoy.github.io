@@ -1499,11 +1499,17 @@ body.cart-open {
 .business-status {
     display: inline-block;
     padding: 10px 18px;
-    margin-bottom: 20px;
+    margin-top: 35px;
+    margin-bottom: 0;
     border-radius: 30px;
     font-size: 13px;
     font-weight: 900;
     letter-spacing: 1px;
+    position: absolute;
+top: 20px;
+left: 25px;
+z-index: 5;
+margin: 0;
 }
 
 .status-open {
@@ -2415,38 +2421,29 @@ body.cart-open {
     border-radius: 20px;
 }
 
-.hero-main::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(0,0,0,.92),
-        rgba(0,0,0,.55),
-        rgba(0,0,0,.05)
-    );
-}
-
 .hero-main-content {
-    position: relative;
+    position: absolute;
     z-index: 2;
-    max-width: 550px;
-    padding: 75px 45px;
+    left: 0;
+    bottom: 0;
+    max-width: 470px;
+    padding: 25px 35px;
 }
 
 .hero-label {
     color: #ff7a00;
+    font-size: 12px;
     font-weight: 900;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 }
 
 .hero-main h1 {
     color: #fff;
-    font-size: clamp(65px, 8vw, 105px);
+    font-size: clamp(50px, 6vw, 80px);
     font-weight: 1000;
     font-style: italic;
     line-height: .9;
-    margin: 20px 0;
+    margin: 14px 0;
 }
 
 .hero-main h1 span {
@@ -2455,15 +2452,16 @@ body.cart-open {
 
 .hero-main h2 {
     color: white;
-    font-size: 25px;
+    font-size: 19px;
     font-weight: 900;
+    line-height: 1.2;
 }
 
 .hero-main-content p {
     color: #eee;
-    font-size: 17px;
-    line-height: 1.6;
-    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 14px 0;
 }
 
 /* PROMOCIONES LATERALES */
@@ -2926,4 +2924,30 @@ body.cart-open {
         font-size: 10px;
         padding: 9px 5px;
     }
+}
+/* =====================================
+   POSICIÓN FINAL DE LA PORTADA
+===================================== */
+
+.hero-main {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-main > .business-status {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    z-index: 5;
+    margin: 0;
+}
+
+.hero-main > .hero-main-content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px 35px 25px;
 }

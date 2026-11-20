@@ -350,7 +350,14 @@ if (cartCount) {
 
             fila.innerHTML=`
     <div>
-        <strong>${item.sabor}</strong>
+        <strong>${item.tipo === "bebida"
+    ? "🥤 "
+    : item.sabor.startsWith("SALSA ")
+        ? "🌶️ "
+        : item.sabor.startsWith("PASIÓN ") || item.sabor.startsWith("OVERNIGHT ")
+            ? "🍰 "
+            : "🍗 "
+}${item.sabor}</strong>
        <p>${item.tipo === "combo"
     ? item.descripcion + " | Sabores: " + item.sabores.join(", ")
     : item.tipo === "bebida"
