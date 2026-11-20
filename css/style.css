@@ -2776,3 +2776,33 @@ body.cart-open {
     position: relative;
     z-index: 2;
 }
+/* DISEÑO COMPACTO DE ALITAS EN MÓVIL */
+@media (max-width: 576px) {
+
+    #category-alitas .flavor-info {
+        padding: 10px;
+    }
+
+    #category-alitas .flavor-info h3 {
+        font-size: 17px;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    #category-alitas .flavor-info p {
+        font-size: 12px;
+        line-height: 1.4;
+        min-height: 50px;
+        margin: 5px 0 10px;
+    }
+
+    #category-alitas .quantity-select {
+        font-size: 12px;
+        padding: 7px;
+    }
+
+    #category-alitas .btn-flavor-order {
+        font-size: 10px;
+        padding: 9px 5px;
+    }
+}
