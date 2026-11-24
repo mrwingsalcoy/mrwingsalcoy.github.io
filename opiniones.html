@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Opiniones de clientes | MrWingsAlcoy</title>
+
+    <meta name="description" content="Comparte tu experiencia y consulta las opiniones de los clientes de MrWingsAlcoy.">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html#inicio">
+                <img src="img/Logo.png" alt="MrWingsAlcoy">
+                MR<span>WINGS</span>ALCOY
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menu"
+                    aria-controls="menu"
+                    aria-expanded="false"
+                    aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#inicio">INICIO</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="pedidos.html">NUESTRA CARTA</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="opiniones.html">OPINIONES</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">CONTACTO</a>
+                    </li>
+
+                    <li class="nav-item ms-lg-3">
+                        <a href="pedidos.html" class="btn-navbar">
+                            🛒 PIDE ONLINE
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- OPINIONES DE CLIENTES -->
+    <section id="opiniones" class="opiniones-section">
+
+        <div class="container">
+
+            <div class="menu-header text-center">
+
+                <span class="menu-tag">VUESTRA OPINIÓN</span>
+
+                <h2 class="section-title">
+                    NUESTROS CLIENTES <span>OPINAN</span>
+                </h2>
+
+                <p class="section-description">
+                    Tu experiencia nos ayuda a seguir mejorando.
+                </p>
+
+            </div>
+
+
+            <!-- FORMULARIO DE OPINIONES -->
+            <div class="formulario-opinion">
+
+                <h3>CUÉNTANOS TU EXPERIENCIA</h3>
+
+                <form id="form-opinion">
+
+                    <label for="opinion-nombre">Tu nombre</label>
+
+                    <input
+                        type="text"
+                        id="opinion-nombre"
+                        maxlength="40"
+                        placeholder="Escribe tu nombre"
+                        required
+                    >
+
+                    <label>Tu valoración</label>
+
+                    <div class="selector-estrellas">
+
+                        <input type="hidden" id="opinion-valoracion" value="5">
+
+                        <button type="button" data-valor="1">★</button>
+                        <button type="button" data-valor="2">★</button>
+                        <button type="button" data-valor="3">★</button>
+                        <button type="button" data-valor="4">★</button>
+                        <button type="button" data-valor="5">★</button>
+
+                    </div>
+
+                    <label for="opinion-comentario">Tu comentario</label>
+
+                    <textarea
+                        id="opinion-comentario"
+                        maxlength="500"
+                        minlength="10"
+                        rows="4"
+                        placeholder="¿Qué te han parecido nuestras alitas?"
+                        required
+                    ></textarea>
+
+                    <div class="botones-opinion">
+
+                        <button type="submit" class="btn-opinion">
+                            ENVIAR MI OPINIÓN
+                        </button>
+
+                        <a href="https://www.google.com/search?q=MrWingsAlcoy"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn-opinion btn-google">
+                            ⭐ RESEÑA EN GOOGLE
+                        </a>
+
+                    </div>
+
+                    <p id="mensaje-opinion"></p>
+
+                </form>
+
+                <!-- OPINIONES PUBLICADAS -->
+                <div id="lista-opiniones" class="row g-4"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
