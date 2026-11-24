@@ -20,6 +20,32 @@ const ordersContainer = document.getElementById("orders-container");
 let token = sessionStorage.getItem("mrwings_admin_token");
 
 // =====================================
+// REGISTRO DEL SERVICE WORKER
+// =====================================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", async function () {
+
+        try {
+
+            const registro = await navigator.serviceWorker.register(
+                "/firebase-messaging-sw.js"
+            );
+
+            console.log("Service Worker registrado:", registro);
+
+        } catch (error) {
+
+            console.error("Error al registrar Service Worker:", error);
+
+        }
+
+    });
+
+}
+
+// =====================================
 // CONEXIÓN CON CLOUDFLARE
 // =====================================
 
