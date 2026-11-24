@@ -1,0 +1,11 @@
+{
+  "name": "MrWingsAlcoy - Administración",
+  "short_name": "MrWingsAlcoy",
+  "description": "Panel de administración de pedidos de MrWingsAlcoy",
+  "start_url": "/admin.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111111",
+  "theme_color": "#111111"
+}

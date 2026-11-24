@@ -2776,18 +2776,20 @@ margin: 0;
 }
 
 @media (max-width: 600px) {
-    .orders-topbar {
-        padding: 10px 15px;
+    /* AJUSTE DEL ENCABEZADO EN MÓVILES */
+    .orders-header {
+        margin-bottom: 20px;
     }
 
-    .orders-logo img {
-        width: 115px;
-        height: 55px;
+    .orders-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
     }
 
-    .back-home {
-        font-size: 11px;
-        padding: 10px 12px;
+    .orders-header p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        padding: 0 8px;
     }
 }
 /* VIDEO PRINCIPAL */
