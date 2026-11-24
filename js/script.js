@@ -75,6 +75,18 @@ const closeCart = document.getElementById("close-cart");
 const cartDrawer = document.getElementById("cart-drawer");
 const cartOverlay = document.getElementById("cart-overlay");
 
+// EJECUTAR EL SISTEMA DEL CARRITO SOLO SI EXISTE
+if (
+    cartItems &&
+    cartTotal &&
+    checkoutButton &&
+    clearCartButton &&
+    cartNotification &&
+    openCart &&
+    closeCart &&
+    cartDrawer &&
+    cartOverlay
+) {
 // =====================================
 // FUNCIONAMIENTO DEL CARRITO
 // =====================================
@@ -902,10 +914,12 @@ document.addEventListener(
 
     });
 
-    actualizarCarrito();
-    // =====================================
-// SISTEMA DE OPINIONES MRWINGSALCOY
+actualizarCarrito();
+
+}
+
 // =====================================
+// SISTEMA DE OPINIONES MRWINGSALCOY
 
 const URL_WORKER =
     "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
