@@ -75,31 +75,40 @@ const closeCart = document.getElementById("close-cart");
 const cartDrawer = document.getElementById("cart-drawer");
 const cartOverlay = document.getElementById("cart-overlay");
 
-function abrirCarrito() {
-    cartDrawer.classList.add("active");
-    cartOverlay.classList.add("active");
-    document.body.classList.add("cart-open");
-}
+// =====================================
+// FUNCIONAMIENTO DEL CARRITO
+// =====================================
 
-function cerrarCarrito() {
-    cartDrawer.classList.remove("active");
-    cartOverlay.classList.remove("active");
-    document.body.classList.remove("cart-open");
-}
+if (cartDrawer && cartOverlay && openCart && closeCart) {
 
-openCart.addEventListener("click", function(event) {
-    event.preventDefault();
-    abrirCarrito();
-});
-
-closeCart.addEventListener("click", cerrarCarrito);
-cartOverlay.addEventListener("click", cerrarCarrito);
-
-document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") {
-        cerrarCarrito();
+    function abrirCarrito() {
+        cartDrawer.classList.add("active");
+        cartOverlay.classList.add("active");
+        document.body.classList.add("cart-open");
     }
-});
+
+    function cerrarCarrito() {
+        cartDrawer.classList.remove("active");
+        cartOverlay.classList.remove("active");
+        document.body.classList.remove("cart-open");
+    }
+
+    openCart.addEventListener("click", function(event) {
+        event.preventDefault();
+        abrirCarrito();
+    });
+
+    closeCart.addEventListener("click", cerrarCarrito);
+
+    cartOverlay.addEventListener("click", cerrarCarrito);
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            cerrarCarrito();
+        }
+    });
+
+}
     // FORMATO DE EUROS
     function euros(valor) {
         return valor.toLocaleString("es-ES", {
