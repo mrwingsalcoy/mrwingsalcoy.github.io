@@ -741,11 +741,11 @@ footer p {
 .combo-image {
     display: block;
     width: 100%;
-    height: auto;
+    height: 180px;
     object-fit: contain;
     object-position: center;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
 }
 /* =========================================
    PORTADA IMPACTANTE MRWINGSALCOY
@@ -1741,11 +1741,25 @@ margin: 0;
     min-width: 0;
 }
 @media (max-width: 576px) {
+
+    .combo-card {
+        padding: 12px 8px;
+    }
+
     .flavor-options {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
     }
-}
 
+    .flavor-option {
+        font-size: 8px;
+        padding: 9px 1px;
+        line-height: 1.3;
+        white-space: normal;
+        min-width: 0;
+    }
+
+}
 /* BOTONES DE SABORES */
 
 .flavor-option {
@@ -2954,4 +2968,41 @@ margin: 0;
     width: 100%;
     max-width: 500px;
     padding: 20px 35px 25px;
+}
+/* AJUSTE DEFINITIVO DE COMBOS EN MÓVILES */
+@media (max-width: 576px) {
+
+    .combo-card {
+        padding: 10px 6px;
+        min-width: 0;
+    }
+
+    .combo-flavor-group {
+        padding: 7px;
+    }
+
+    .flavor-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .combo-card .flavor-option {
+        width: 100%;
+        min-width: 0;
+        padding: 9px 1px;
+        font-size: 8px;
+        line-height: 1.2;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .combo-selection-title {
+        font-size: 13px;
+    }
+
+    .selection-counter {
+        font-size: 10px;
+    }
+
 }
