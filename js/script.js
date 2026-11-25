@@ -645,6 +645,35 @@ document.addEventListener("visibilitychange", function() {
 
 const ventanaWhatsApp = window.open("about:blank", "_blank");
 
+if (ventanaWhatsApp) {
+    ventanaWhatsApp.document.write(`
+        <html>
+        <head>
+            <title>MrWingsAlcoy</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+        <body style="
+            margin:0;
+            background:#171717;
+            color:white;
+            font-family:Arial,sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            text-align:center;
+        ">
+            <div>
+                <h1 style="color:#ff8c00;">🍗 MrWingsAlcoy</h1>
+                <h2>Preparando tu pedido...</h2>
+                <p>Abriendo WhatsApp. ¡Gracias por elegirnos!</p>
+            </div>
+        </body>
+        </html>
+    `);
+    ventanaWhatsApp.document.close();
+}
+
             const datos = new FormData(nuevoFormulario);
 
             const nombre = datos.get("nombre");
