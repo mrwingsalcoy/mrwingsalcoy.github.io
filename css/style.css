@@ -2901,6 +2901,7 @@ margin: 0;
     border-radius: 20px;
 }
 .hero-main::after {
+    display: none;
     content: "";
     position: absolute;
     inset: 0;
