@@ -3006,5 +3006,28 @@ margin: 0;
     .selection-counter {
         font-size: 10px;
     }
+/* =================================
+   CARRITO COMPACTO PARA MÓVILES
+================================= */
 
+@media (max-width: 600px) {
+
+    .cart-drawer {
+        padding: 16px;
+    }
+
+    .cart-item {
+        padding: 12px 9px;
+        margin-bottom: 8px;
+        gap: 8px;
+        border-radius: 10px;
+    }
+
+    .cart-total {
+        margin-top: 16px;
+        padding-top: 16px;
+        font-size: 19px;
+    }
+
+}
 }
