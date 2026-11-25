@@ -5,6 +5,8 @@
 const API_URL = "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
 // PEDIDOS Y VISTA ACTUAL
 let pedidosCargados = [];
+let idsPedidosConocidos = null;
+let temporizadorPedidos = null;
 let vistaActual = "activos";
 let filtroBusqueda = "";
 let graficoVentas = null;
@@ -16,6 +18,13 @@ const loginForm = document.getElementById("login-form");
 const loginError = document.getElementById("login-error");
 
 const ordersContainer = document.getElementById("orders-container");
+
+// SONIDO DE NUEVOS PEDIDOS
+const botonSonido = document.getElementById("activar-sonido");
+const estadoSonido = document.getElementById("estado-sonido");
+
+let contextoAudio = null;
+let sonidoActivado = false;
 
 let token = sessionStorage.getItem("mrwings_admin_token");
 
@@ -67,13 +76,96 @@ async function llamarAPI(datos) {
 
     return resultado;
 }
+
+// =====================================
+// CAMPANILLA DE NUEVO PEDIDO
+// =====================================
+
+function reproducirCampanilla() {
+
+    if (!sonidoActivado || !contextoAudio) {
+        return;
+    }
+
+    const ahora = contextoAudio.currentTime;
+
+    function tono(frecuencia, inicio, duracion) {
+
+        const oscilador = contextoAudio.createOscillator();
+        const volumen = contextoAudio.createGain();
+
+        oscilador.type = "sine";
+        oscilador.frequency.value = frecuencia;
+
+        volumen.gain.setValueAtTime(0.0001, ahora + inicio);
+
+        volumen.gain.exponentialRampToValueAtTime(
+            0.25,
+            ahora + inicio + 0.03
+        );
+
+        volumen.gain.exponentialRampToValueAtTime(
+            0.0001,
+            ahora + inicio + duracion
+        );
+
+        oscilador.connect(volumen);
+        volumen.connect(contextoAudio.destination);
+
+        oscilador.start(ahora + inicio);
+        oscilador.stop(ahora + inicio + duracion);
+    }
+
+    tono(1046, 0, 0.7);
+    tono(1318, 0.35, 0.9);
+}
+
+// ACTIVAR SONIDO DESDE EL BOTÓN
+
+botonSonido.addEventListener("click", async function () {
+
+    try {
+
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContextClass) {
+            throw new Error("El navegador no admite sonido.");
+        }
+
+        if (!contextoAudio) {
+            contextoAudio = new AudioContextClass();
+        }
+
+        await contextoAudio.resume();
+
+        sonidoActivado = true;
+
+        estadoSonido.textContent =
+            "✅ Campanilla activada. Esperando nuevos pedidos.";
+
+        reproducirCampanilla();
+
+    } catch (error) {
+
+        estadoSonido.textContent =
+            "No se pudo activar el sonido. Inténtalo nuevamente.";
+
+        console.error(error);
+
+    }
+
+});
+
 // =====================================
 // CARGAR PEDIDOS
 // =====================================
 
-async function cargarPedidos() {
+async function cargarPedidos(silencioso = false) {
 
-    ordersContainer.innerHTML = "<p>Cargando pedidos...</p>";
+    if (!silencioso) {
+        ordersContainer.innerHTML = "<p>Cargando pedidos...</p>";
+    }
 
     try {
 
@@ -86,15 +178,42 @@ async function cargarPedidos() {
             throw new Error("No se pudieron cargar los pedidos");
         }
 
-        pedidosCargados = resultado.pedidos;
+// DETECTAR PEDIDOS NUEVOS
+const idsActuales = resultado.pedidos.map(pedido => Number(pedido.id));
 
-        mostrarPedidos(pedidosCargados);
+if (idsPedidosConocidos !== null) {
+
+    const hayPedidosNuevos = idsActuales.some(
+        id => !idsPedidosConocidos.includes(id)
+    );
+
+if (hayPedidosNuevos) {
+    console.log("¡Ha llegado un pedido nuevo!");
+
+    reproducirCampanilla();
+}
+
+}
+
+// GUARDAR LOS IDS CONOCIDOS
+idsPedidosConocidos = idsActuales;
+
+pedidosCargados = resultado.pedidos;
+
+mostrarPedidos(pedidosCargados);
 
     } catch(error) {
 
         ordersContainer.innerHTML = "";
 
         if (error.message.includes("Sesión")) {
+
+            if (temporizadorPedidos !== null) {
+    clearInterval(temporizadorPedidos);
+    temporizadorPedidos = null;
+}
+
+idsPedidosConocidos = null;
 
             sessionStorage.removeItem("mrwings_admin_token");
 
@@ -150,6 +269,8 @@ loginForm.addEventListener("submit", async function(event) {
 
         await cargarPedidos();
 
+        iniciarComprobacionPedidos(); 
+
     } catch(error) {
 
         loginError.textContent = error.message;
@@ -168,12 +289,39 @@ function mostrarPanel() {
     dashboardSection.hidden = false;
 
 }
+// =====================================
+// COMPROBAR PEDIDOS AUTOMÁTICAMENTE
+// =====================================
 
+function iniciarComprobacionPedidos() {
+
+    if (temporizadorPedidos !== null) {
+        clearInterval(temporizadorPedidos);
+    }
+
+    temporizadorPedidos = setInterval(() => {
+
+        if (token && !dashboardSection.hidden) {
+            cargarPedidos(true);
+        }
+
+    }, 15000);
+
+}
 // =====================================
 // CERRAR SESIÓN
 // =====================================
 
 document.getElementById("logout-button").addEventListener("click", function() {
+
+    // DETENER COMPROBACIÓN AUTOMÁTICA
+    if (temporizadorPedidos !== null) {
+        clearInterval(temporizadorPedidos);
+        temporizadorPedidos = null;
+    }
+
+    // REINICIAR DETECCIÓN DE PEDIDOS
+    idsPedidosConocidos = null;
 
     sessionStorage.removeItem("mrwings_admin_token");
 
@@ -185,7 +333,6 @@ document.getElementById("logout-button").addEventListener("click", function() {
     loginError.textContent = "";
 
 });
-
 // =====================================
 // CAMBIAR ENTRE PEDIDOS Y OPINIONES
 // =====================================
