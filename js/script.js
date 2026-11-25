@@ -1189,18 +1189,25 @@ if (indicador) {
 
 });
 
-// FORZAR REPRODUCCIÓN AUTOMÁTICA EN IPHONE
+// REPRODUCCIÓN AUTOMÁTICA DEL VIDEO EN IPHONE
 document.addEventListener("DOMContentLoaded", function () {
 
     const video = document.querySelector(".hero-video");
 
-    if (video) {
-        video.muted = true;
-        video.defaultMuted = true;
+    if (!video) return;
 
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+
+    video.addEventListener("canplay", function () {
         video.play().catch(function (error) {
-            console.log("El iPhone bloqueó la reproducción:", error);
+            console.log("Error de reproducción:", error);
         });
-    }
+    }, { once: true });
+
+    video.load();
 
 });
