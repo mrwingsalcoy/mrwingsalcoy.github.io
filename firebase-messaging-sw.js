@@ -24,14 +24,15 @@ messaging.onBackgroundMessage(function (payload) {
 
     const titulo = datos.title || "🍗 Nuevo pedido - MrWingsAlcoy";
 
-    const opciones = {
-        body: datos.body || "Has recibido un nuevo pedido.",
-        data: {
-            url: datos.url || "/admin.html"
-        },
-        tag: "mrwings-nuevo-pedido",
-        renotify: true
-    };
+   const opciones = {
+    body: datos.body || "Has recibido un nuevo pedido.",
+    silent: false,
+    data: {
+        url: datos.url || "/admin.html"
+    },
+    tag: "mrwings-nuevo-pedido",
+    renotify: true
+};
 
     return self.registration.showNotification(titulo, opciones);
 });
