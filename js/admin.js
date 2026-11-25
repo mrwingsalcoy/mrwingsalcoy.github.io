@@ -188,7 +188,11 @@ if (idsPedidosConocidos !== null) {
     );
 
 if (hayPedidosNuevos) {
+
     console.log("¡Ha llegado un pedido nuevo!");
+
+    estadoSonido.textContent =
+        "🔔 ¡Pedido nuevo detectado! Intentando reproducir la campanilla.";
 
     reproducirCampanilla();
 }
@@ -209,11 +213,11 @@ mostrarPedidos(pedidosCargados);
         if (error.message.includes("Sesión")) {
 
             if (temporizadorPedidos !== null) {
-    clearInterval(temporizadorPedidos);
-    temporizadorPedidos = null;
-}
+                 clearInterval(temporizadorPedidos);
+                    temporizadorPedidos = null;
+                }
 
-idsPedidosConocidos = null;
+            idsPedidosConocidos = null;
 
             sessionStorage.removeItem("mrwings_admin_token");
 
