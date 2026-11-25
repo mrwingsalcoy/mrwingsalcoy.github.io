@@ -83,9 +83,15 @@ async function llamarAPI(datos) {
 
 function reproducirCampanilla() {
 
-    if (!sonidoActivado || !contextoAudio) {
-        return;
-    }
+   if (!sonidoActivado || !contextoAudio) {
+    console.log("Sonido desactivado o audio no inicializado");
+    return;
+}
+
+if (contextoAudio.state !== "running") {
+    console.log("Audio suspendido:", contextoAudio.state);
+    return;
+}
 
     const ahora = contextoAudio.currentTime;
 
