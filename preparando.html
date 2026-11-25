@@ -84,6 +84,28 @@
         </p>
 
     </div>
+<script>
+    let salioAWhatsApp = false;
 
+    document.addEventListener("visibilitychange", function() {
+
+        if (document.visibilityState === "hidden") {
+            salioAWhatsApp = true;
+        }
+
+        if (document.visibilityState === "visible" && salioAWhatsApp) {
+
+            window.close();
+
+            setTimeout(function() {
+                if (!window.closed) {
+                    window.location.replace("/");
+                }
+            }, 300);
+
+        }
+
+    });
+</script>
 </body>
 </html>
