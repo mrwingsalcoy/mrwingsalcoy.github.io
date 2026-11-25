@@ -1190,6 +1190,7 @@ if (indicador) {
 });
 
 // REPRODUCCIÓN AUTOMÁTICA DEL VIDEO EN IPHONE
+/*
 document.addEventListener("DOMContentLoaded", function () {
 
     const video = document.querySelector(".hero-video");
@@ -1211,3 +1212,4 @@ document.addEventListener("DOMContentLoaded", function () {
     video.load();
 
 });
+*/
