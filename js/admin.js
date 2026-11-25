@@ -6,6 +6,7 @@ const API_URL = "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
 // PEDIDOS Y VISTA ACTUAL
 let pedidosCargados = [];
 let idsPedidosConocidos = null;
+let ignorarPedidosAlRegresar = false;
 let temporizadorPedidos = null;
 let vistaActual = "activos";
 let filtroBusqueda = "";
