@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "TRUFADAS": { 6: 7.50, 12: 14, 18: 20 },
 
         // SALSAS ADICIONALES
-    "SALSA BBQ": { 1: 0.50 },
-    "SALSA BRAVA": { 1: 0.50 },
-    "SALSA ACEVICHADA": { 1: 1.00 },
-    "SALSA TRUFADA": { 1: 1.00 },
-    "SALSA MARACUYÁ": { 1: 1.00 },
+    "SALSA BBQ": { 1: 0.30 },
+    "SALSA BRAVA": { 1: 0.30 },
+    "SALSA ACEVICHADA": { 1: 0.50 },
+    "SALSA TRUFADA": { 1: 0.50},
+    "SALSA MARACUYÁ": { 1: 0.50 },
 
     // POSTRES
     "PASIÓN DE CHOCOLATE": { 1: 5.00 },
@@ -1185,6 +1185,22 @@ if (indicador) {
             elemento.classList.add("visible");
         });
 
+    }
+
+});
+
+// FORZAR REPRODUCCIÓN AUTOMÁTICA EN IPHONE
+document.addEventListener("DOMContentLoaded", function () {
+
+    const video = document.querySelector(".hero-video");
+
+    if (video) {
+        video.muted = true;
+        video.defaultMuted = true;
+
+        video.play().catch(function (error) {
+            console.log("El iPhone bloqueó la reproducción:", error);
+        });
     }
 
 });
