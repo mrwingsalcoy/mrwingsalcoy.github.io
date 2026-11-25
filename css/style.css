@@ -3726,3 +3726,23 @@ margin: 0;
     font-size: 11px;
     font-weight: 700;
 }
+@media (max-width: 576px) {
+
+    .footer-payment {
+        margin-top: 14px;
+    }
+
+    .footer-payment h4 {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .payment-options {
+        gap: 6px;
+    }
+
+    .payment-options span {
+        padding: 6px 9px;
+        font-size: 10px;
+    }
+}
