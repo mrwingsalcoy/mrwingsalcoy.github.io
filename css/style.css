@@ -2738,6 +2738,105 @@ margin: 0;
     font-size: 12px;
     padding: 13px 16px;
 }
+/* =================================
+   CARRITO COMPACTO PARA MÓVILES
+================================= */
+
+@media (max-width: 600px) {
+
+    .cart-drawer {
+        padding: 16px;
+    }
+
+    .cart-item {
+        padding: 12px 9px;
+        margin-bottom: 8px;
+        gap: 8px;
+        border-radius: 10px;
+    }
+
+    .cart-total {
+        margin-top: 16px;
+        padding-top: 16px;
+        font-size: 19px;
+    }
+
+    .cart-item .remove-item {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        margin-left: 6px;
+        font-size: 18px;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    .cart-item strong {
+        font-size: 15px;
+    }
+
+    .cart-item p {
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+}
+    /* BOTONES DE CANTIDAD */
+    .cart-quantity {
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .cart-quantity button {
+        width: 27px;
+        height: 27px;
+        font-size: 17px;
+        border-radius: 5px;
+    }
+
+    .cart-quantity span {
+        font-size: 15px;
+        min-width: 18px;
+    }
+        /* FORMULARIO DE PEDIDO EN MÓVILES */
+    #checkout-form {
+        margin-top: 18px;
+        padding: 15px 12px;
+    }
+
+    #checkout-form h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    #checkout-form label {
+        font-size: 13px;
+        margin: 12px 0 6px;
+    }
+
+    #checkout-form input,
+    #checkout-form textarea {
+        padding: 11px;
+        font-size: 13px;
+    }
+
+    #checkout-form textarea {
+        min-height: 75px;
+    }
+        /* BOTÓN CONTINUAR CON EL PEDIDO */
+    .btn-order {
+        padding: 12px;
+        font-size: 14px;
+        border-radius: 8px;
+        margin-top: 12px;
+    }
+        /* ALTURA AUTOMÁTICA DEL CARRITO */
+    .cart-drawer {
+        height: auto;
+        max-height: 100dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
 }
 /* =====================================
    CABECERA PÁGINA DE PEDIDOS
@@ -3006,6 +3105,8 @@ margin: 0;
     .selection-counter {
         font-size: 10px;
     }
+
+}
 /* =================================
    CARRITO COMPACTO PARA MÓVILES
 ================================= */
@@ -3028,6 +3129,30 @@ margin: 0;
         padding-top: 16px;
         font-size: 19px;
     }
+    /* FORMULARIO DE PEDIDO EN MÓVILES */
+    #checkout-form {
+        margin-top: 18px;
+        padding: 15px 12px;
+    }
 
-}
+    #checkout-form h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    #checkout-form label {
+        font-size: 13px;
+        margin: 12px 0 6px;
+    }
+
+    #checkout-form input,
+    #checkout-form textarea {
+        padding: 11px;
+        font-size: 13px;
+    }
+
+    #checkout-form textarea {
+        min-height: 75px;
+    }
+    
 }
