@@ -539,6 +539,8 @@ async function actualizarEstadoOpinion(id, estado) {
 function actualizarGraficoVentas(pedidos) {
 
     const ahora = new Date();
+    // FECHA DE INICIO DE LA NUEVA GESTIÓN
+const fechaInicioGestion = "2026-11-25";
 
     const partes = new Intl.DateTimeFormat("es-ES", {
         timeZone: "Europe/Madrid",
@@ -629,31 +631,33 @@ function actualizarGraficoVentas(pedidos) {
         }
     });
 }
-// =====================================
-// MOSTRAR PEDIDOS Y ESTADÍSTICAS
-// =====================================
+    // =====================================
+    // MOSTRAR PEDIDOS Y ESTADÍSTICAS
+    // =====================================
 
-function mostrarPedidos(pedidos) {
+    function mostrarPedidos(pedidos) {
 
-    // SELECCIONAR CONTENEDOR SEGÚN LA PESTAÑA
-    const contenedor = vistaActual === "activos"
-        ? ordersContainer
-        : document.getElementById("history-container");
+        // SELECCIONAR CONTENEDOR SEGÚN LA PESTAÑA
+        const contenedor = vistaActual === "activos"
+            ? ordersContainer
+            : document.getElementById("history-container");
 
-    contenedor.innerHTML = "";
+        contenedor.innerHTML = "";
 
-const ahora = new Date();
+    const ahora = new Date();
+    // FECHA DE INICIO DE LA NUEVA GESTIÓN
+const fechaInicioGestion = "2026-11-25";
 
-const partesHoy = new Intl.DateTimeFormat("es-ES", {
-    timeZone: "Europe/Madrid",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-}).formatToParts(ahora);
+    const partesHoy = new Intl.DateTimeFormat("es-ES", {
+        timeZone: "Europe/Madrid",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    }).formatToParts(ahora);
 
-const diaHoy = Number(partesHoy.find(p => p.type === "day").value);
-const mesHoy = Number(partesHoy.find(p => p.type === "month").value);
-const anioHoy = Number(partesHoy.find(p => p.type === "year").value);
+    const diaHoy = Number(partesHoy.find(p => p.type === "day").value);
+    const mesHoy = Number(partesHoy.find(p => p.type === "month").value);
+    const anioHoy = Number(partesHoy.find(p => p.type === "year").value);
 
 // FECHA DE HOY EN FORMATO YYYY-MM-DD
 const fechaHoy = `${anioHoy}-${String(mesHoy).padStart(2, "0")}-${String(diaHoy).padStart(2, "0")}`;
@@ -690,8 +694,13 @@ function obtenerFechaPedido(fechaTexto) {
     return `${anio}-${mes}-${dia}`;
 }
 
+// PEDIDOS DE LA NUEVA GESTIÓN
+const pedidosGestion = pedidos.filter(pedido =>
+    obtenerFechaPedido(pedido.fecha) >= fechaInicioGestion
+);
+
 // PEDIDOS DE HOY
-const pedidosHoy = pedidos.filter(pedido =>
+const pedidosHoy = pedidosGestion.filter(pedido =>
     obtenerFechaPedido(pedido.fecha) === fechaHoy
 );
 
@@ -702,17 +711,17 @@ const ventasHoy = pedidosHoy.reduce(
 );
 
 // VENTAS DE AYER
-const ventasAyer = pedidos
+const ventasAyer = pedidosGestion
     .filter(pedido => obtenerFechaPedido(pedido.fecha) === fechaAyer)
     .reduce((total, pedido) => total + Number(pedido.total || 0), 0);
 
 // VENTAS DE LOS ÚLTIMOS 7 DÍAS
-const ventasSemana = pedidos
+const ventasSemana = pedidosGestion
     .filter(pedido => fechasSemana.includes(obtenerFechaPedido(pedido.fecha)))
     .reduce((total, pedido) => total + Number(pedido.total || 0), 0);
 
-// PEDIDOS ENTREGADOS
-const pedidosEntregados = pedidos.filter(
+// PEDIDOS ENTREGADOS DE LA NUEVA GESTIÓN
+const pedidosEntregados = pedidosGestion.filter(
     pedido => pedido.estado === "Entregado"
 );
 
@@ -740,11 +749,14 @@ document.getElementById("pedidos-entregados").textContent =
 
 document.getElementById("ticket-medio").textContent = euros(ticketMedio);
 // ACTUALIZAR GRÁFICO DE VENTAS
-actualizarGraficoVentas(pedidos);
+actualizarGraficoVentas(pedidosGestion);
 // FILTRAR PEDIDOS SEGÚN LA PESTAÑA
 let pedidosVista = vistaActual === "activos"
-    ? pedidos.filter(pedido => pedido.estado !== "Entregado")
-    : pedidos.filter(pedido => pedido.estado === "Entregado");
+    ? pedidosGestion.filter(pedido => pedido.estado !== "Entregado")
+    : pedidos.filter(pedido =>
+        obtenerFechaPedido(pedido.fecha) < fechaInicioGestion ||
+        pedido.estado === "Entregado"
+    );
 
 // APLICAR BUSCADOR
 if (filtroBusqueda.trim() !== "") {
