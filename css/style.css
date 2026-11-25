@@ -3698,3 +3698,31 @@ margin: 0;
         font-size: 9px;
     }
 }
+/* MÉTODOS DE PAGO FOOTER */
+
+.footer-payment {
+    margin-top: 20px;
+}
+
+.footer-payment h4 {
+    color: #ff6b00;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.payment-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.payment-options span {
+    background: #202020;
+    border: 1px solid #333;
+    color: #ddd;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
