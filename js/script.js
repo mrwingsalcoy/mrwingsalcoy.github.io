@@ -1189,8 +1189,7 @@ if (indicador) {
 
 });
 
-// REPRODUCCIÓN AUTOMÁTICA DEL VIDEO EN IPHONE
-/*
+// REPRODUCCIÓN AUTOMÁTICA DEL VIDEO
 document.addEventListener("DOMContentLoaded", function () {
 
     const video = document.querySelector(".hero-video");
@@ -1200,16 +1199,12 @@ document.addEventListener("DOMContentLoaded", function () {
     video.muted = true;
     video.defaultMuted = true;
     video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
 
-    video.addEventListener("canplay", function () {
-        video.play().catch(function (error) {
-            console.log("Error de reproducción:", error);
-        });
-    }, { once: true });
-
-    video.load();
+    video.play().catch(function (error) {
+        console.log("No se pudo iniciar automáticamente:", error);
+    });
 
 });
-*/
