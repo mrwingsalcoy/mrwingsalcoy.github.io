@@ -28,7 +28,20 @@ let contextoAudio = null;
 let sonidoActivado = false;
 
 let token = sessionStorage.getItem("mrwings_admin_token");
+// DETECTAR CUANDO EL PANEL PASA A SEGUNDO PLANO O REGRESA
+document.addEventListener("visibilitychange", function() {
 
+    if (document.hidden) {
+
+        ignorarPedidosAlRegresar = true;
+
+    } else if (token && !dashboardSection.hidden) {
+
+        cargarPedidos(true);
+
+    }
+
+});
 // =====================================
 // REGISTRO DEL SERVICE WORKER
 // =====================================
@@ -188,7 +201,7 @@ async function cargarPedidos(silencioso = false) {
 // DETECTAR PEDIDOS NUEVOS
 const idsActuales = resultado.pedidos.map(pedido => Number(pedido.id));
 
-if (idsPedidosConocidos !== null) {
+if (idsPedidosConocidos !== null && !ignorarPedidosAlRegresar) {
 
     const hayPedidosNuevos = idsActuales.some(
         id => !idsPedidosConocidos.includes(id)
@@ -205,7 +218,11 @@ if (hayPedidosNuevos) {
 }
 
 }
-
+// REINICIAR CONTROL AL REGRESAR AL PANEL
+if (!document.hidden) {
+    ignorarPedidosAlRegresar = false;
+}
+        
 // GUARDAR LOS IDS CONOCIDOS
 idsPedidosConocidos = idsActuales;
 
@@ -312,9 +329,9 @@ function iniciarComprobacionPedidos() {
 
     temporizadorPedidos = setInterval(() => {
 
-        if (token && !dashboardSection.hidden) {
-            cargarPedidos(true);
-        }
+        if (token && !dashboardSection.hidden && !document.hidden) {
+    cargarPedidos(true);
+}
 
     }, 15000);
 
