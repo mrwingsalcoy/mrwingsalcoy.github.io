@@ -634,7 +634,15 @@ suggest_addresses: true
         nuevoFormulario.addEventListener("submit", async function(event) {
 
             event.preventDefault();
-        // ABRIR PESTAÑA PARA EVITAR BLOQUEO DEL NAVEGADOR
+        // DETECTAR LA SALIDA DE LA PÁGINA DESDE EL PRINCIPIO
+window.mrwingsSalioDeLaWeb = false;
+
+document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "hidden") {
+        window.mrwingsSalioDeLaWeb = true;
+    }
+});
+
 const ventanaWhatsApp = window.open("about:blank", "_blank");
 
             const datos = new FormData(nuevoFormulario);
@@ -875,7 +883,7 @@ ventanaWhatsApp.location.href = url;
 console.log("URL de WhatsApp:", url);
 console.log("Ventana WhatsApp:", ventanaWhatsApp);
 // DETECTAR CUANDO EL CLIENTE REGRESA DE WHATSAPP
-let salioDeLaWeb = false;
+let salioDeLaWeb = window.mrwingsSalioDeLaWeb || false;
 
 function detectarRegresoWhatsApp() {
 
