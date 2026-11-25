@@ -3612,3 +3612,89 @@ margin: 0;
         font-size: 18px;
     }
 }
+/* FOOTER MRWINGS - VERSIÓN COMPACTA MÓVIL */
+
+@media (max-width: 576px) {
+
+    .footer-mrwings {
+        padding: 25px 15px 12px;
+    }
+
+    .footer-grid {
+        gap: 20px 12px;
+        padding-bottom: 22px;
+    }
+
+    .footer-logo {
+        width: 55px;
+        height: 55px;
+        margin-bottom: 5px;
+    }
+
+    .footer-brand h3 {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    .footer-brand p {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    .footer-delivery {
+        font-size: 10px;
+        margin-top: 3px;
+    }
+
+    .footer-info h4,
+    .footer-social h4 {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .footer-info p {
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+    .footer-info strong {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .footer-whatsapp {
+        padding: 9px 11px;
+        font-size: 10px;
+        gap: 7px;
+    }
+
+    .footer-social-links {
+        margin-top: 12px;
+        gap: 9px;
+    }
+
+    .footer-social-links a {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+    }
+
+    .footer-navigation {
+        gap: 16px;
+        padding: 15px 0;
+    }
+
+    .footer-navigation a {
+        font-size: 10px;
+    }
+
+    .footer-bottom {
+        padding-top: 13px;
+        gap: 5px;
+    }
+
+    .footer-bottom p,
+    .footer-bottom span {
+        font-size: 9px;
+    }
+}
