@@ -101,7 +101,9 @@ function reproducirCampanilla() {
     console.log("Sonido desactivado o audio no inicializado");
     return;
 }
-
+console.log("Estado del audio:", contextoAudio.state);
+console.log("Sonido activado:", sonidoActivado);
+    
 if (contextoAudio.state !== "running") {
     console.log("Audio suspendido:", contextoAudio.state);
     return;
