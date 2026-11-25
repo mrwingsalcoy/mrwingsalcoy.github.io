@@ -3157,3 +3157,116 @@ margin: 0;
     }
     
 }
+/* =====================================
+   POR QUÉ ELEGIR MRWINGS
+===================================== */
+
+.why-mrwings {
+    padding: 85px 20px;
+    background: linear-gradient(180deg, #151515, #090909);
+    color: #fff;
+}
+
+.why-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.why-header > span {
+    color: #ff6b00;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.why-header h2 {
+    font-size: 36px;
+    font-weight: 900;
+    margin: 12px 0;
+}
+
+.why-header h2 strong {
+    color: #ff6b00;
+}
+
+.why-header p {
+    color: #aaa;
+    font-size: 16px;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.why-card {
+    text-align: center;
+    padding: 35px 20px;
+    background: #202020;
+    border: 1px solid #333;
+    border-radius: 18px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.why-card:hover {
+    transform: translateY(-8px);
+    border-color: #ff6b00;
+}
+
+.why-icon {
+    font-size: 42px;
+    margin-bottom: 18px;
+}
+
+.why-card h3 {
+    color: #ff6b00;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.why-card p {
+    color: #ccc;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* TABLETS */
+@media (max-width: 991px) {
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MÓVILES */
+@media (max-width: 576px) {
+    .why-mrwings {
+        padding: 60px 15px;
+    }
+
+    .why-header h2 {
+        font-size: 27px;
+    }
+
+    .why-grid {
+        gap: 12px;
+    }
+
+    .why-card {
+        padding: 25px 12px;
+    }
+
+    .why-icon {
+        font-size: 34px;
+    }
+
+    .why-card h3 {
+        font-size: 14px;
+    }
+
+    .why-card p {
+        font-size: 12px;
+    }
+}
