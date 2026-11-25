@@ -1189,8 +1189,8 @@ if (indicador) {
 
 });
 
-// REPRODUCCIÓN AUTOMÁTICA DEL VIDEO
-document.addEventListener("DOMContentLoaded", function () {
+// PRUEBA DE REPRODUCCIÓN AUTOMÁTICA
+window.addEventListener("load", function () {
 
     const video = document.querySelector(".hero-video");
 
@@ -1198,13 +1198,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     video.muted = true;
     video.defaultMuted = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("autoplay", "");
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
+    video.playsInline = true;
 
-    video.play().catch(function (error) {
-        console.log("No se pudo iniciar automáticamente:", error);
-    });
+    video.play()
+        .then(function () {
+            console.log("Vídeo iniciado correctamente");
+        })
+        .catch(function (error) {
+            console.log("Autoplay bloqueado:", error.name, error.message);
+        });
 
 });
