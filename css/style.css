@@ -3330,3 +3330,56 @@ margin: 0;
         padding: 18px 10px;
     }
 }
+/* MRWINGS - DISEÑO SUTIL PARA MÓVILES */
+@media (max-width: 576px) {
+
+    .why-mrwings {
+        padding: 25px 12px;
+        background: #111;
+    }
+
+    .why-header {
+        margin-bottom: 18px;
+    }
+
+    .why-header > span {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .why-header h2 {
+        font-size: 19px;
+        margin: 6px 0;
+    }
+
+    .why-header p {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .why-grid {
+        gap: 9px;
+    }
+
+    .why-card {
+        padding: 13px 8px;
+        background: #191919;
+        border: 1px solid #292929;
+        border-radius: 10px;
+    }
+
+    .why-icon {
+        font-size: 23px;
+        margin-bottom: 6px;
+    }
+
+    .why-card h3 {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .why-card p {
+        font-size: 10px;
+        line-height: 1.4;
+    }
+}
