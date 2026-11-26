@@ -1263,7 +1263,6 @@ footer p {
     font-weight: bold;
 }
 
-```css
 /* CAMPOS DEL FORMULARIO */
 #checkout-form input,
 #checkout-form textarea {
@@ -3903,5 +3902,144 @@ margin: 0;
     #checkout-summary .checkout-total {
         padding: 15px;
         font-size: 18px;
+    }
+}
+/* =========================================
+   MRWINGSALCOY - DISEÑO UNIFICADO CHECKOUT
+========================================= */
+
+/* TARJETA DEL RESUMEN */
+
+#checkout-summary {
+    margin-top: 25px;
+    padding: 22px 20px;
+    background: #1c1c1c;
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+/* TARJETA DE ENTREGA */
+
+#checkout-form {
+    margin-top: 25px;
+    padding: 22px 20px;
+    background: #1c1c1c;
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+/* TÍTULOS UNIFICADOS */
+
+#checkout-summary h2,
+#checkout-delivery h2 {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+/* TARJETAS DE PRODUCTOS */
+
+#checkout-summary .cart-item {
+    padding: 12px 14px;
+    margin-bottom: 9px;
+    border-radius: 10px;
+}
+
+/* TOTAL */
+
+#checkout-summary .checkout-total {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 19px;
+}
+
+/* ETIQUETAS DEL FORMULARIO */
+
+#checkout-form label {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 16px 0 8px;
+}
+
+/* CAMPOS */
+
+#checkout-form input,
+#checkout-form textarea {
+    width: 100%;
+    padding: 14px;
+    background: #101010;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+/* BOTÓN WHATSAPP */
+
+#checkout-form button {
+    width: 100%;
+    min-height: 58px;
+    margin-top: 25px;
+    padding: 14px;
+    background: linear-gradient(90deg, #ff8c00, #ff4d00);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    transition: .3s ease;
+}
+
+#checkout-form button:active {
+    transform: scale(.98);
+}
+
+/* DISEÑO PARA MÓVILES */
+
+@media (max-width: 600px) {
+
+    #checkout-summary,
+    #checkout-form {
+        padding: 17px 13px;
+        margin-top: 18px;
+        border-radius: 12px;
+    }
+
+    #checkout-summary h2,
+    #checkout-delivery h2 {
+        font-size: 21px;
+        margin-bottom: 17px;
+    }
+
+    #checkout-summary .cart-item strong {
+        font-size: 14px;
+    }
+
+    #checkout-summary .cart-item p {
+        font-size: 13px;
+    }
+
+    #checkout-summary .checkout-total {
+        font-size: 17px;
+        padding: 14px;
+    }
+
+    #checkout-form label {
+        font-size: 14px;
+    }
+
+    #checkout-form input,
+    #checkout-form textarea {
+        font-size: 15px;
+        padding: 13px;
+    }
+
+    #checkout-form button {
+        min-height: 56px;
+        font-size: 15px;
     }
 }
