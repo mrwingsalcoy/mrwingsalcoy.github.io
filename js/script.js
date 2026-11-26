@@ -771,3 +771,47 @@ window.addEventListener("load", function () {
         });
 
 });
+
+// =========================================
+// MRWINGSALCOY - ABRIR Y CERRAR MODAL BBQ
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const bbqImage = document.querySelector('.flavor-card img[src="img/bbq.jpg"]');
+    const bbqModal = document.getElementById("bbq-modal");
+    const closeBbqModal = document.getElementById("close-bbq-modal");
+
+    if (!bbqImage || !bbqModal || !closeBbqModal) return;
+
+    // Abrir ventana al tocar la fotografía
+    bbqImage.style.cursor = "pointer";
+
+    bbqImage.addEventListener("click", function () {
+        bbqModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // Cerrar con la X
+    closeBbqModal.addEventListener("click", function () {
+        bbqModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // Cerrar al tocar fuera de la ventana
+    bbqModal.addEventListener("click", function (event) {
+        if (event.target === bbqModal) {
+            bbqModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Cerrar con la tecla Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            bbqModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
