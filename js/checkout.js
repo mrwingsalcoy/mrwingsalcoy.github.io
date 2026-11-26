@@ -226,4 +226,330 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 400);
 
     });
+    // =========================================
+// ENVIAR PEDIDO A WHATSAPP
+// =========================================
+
+const formularioPedido = document.getElementById("checkout-form");
+
+const telefonoMrWings = "34611210874";
+
+const URL_WORKER =
+    "https://misty-tooth-6094.oquijandriagarcia.workers.dev/";
+
+formularioPedido.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    // RECUPERAR DATOS DEL FORMULARIO
+    const datos = new FormData(formularioPedido);
+
+    const nombre = datos.get("nombre").trim();
+    const telefonoCliente = datos.get("telefono").trim();
+    const telefonoLimpio = telefonoCliente.replace(/[\s-]/g, "");
+
+    const direccion = datos.get("direccion").trim();
+    const numero = datos.get("numero").trim();
+    const localidad = datos.get("localidad").trim();
+    const piso = datos.get("piso").trim();
+    const observaciones = datos.get("observaciones").trim();
+
+    // VALIDAR NOMBRE
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s'-]{3,}$/.test(nombre)) {
+        alert("Por favor, introduce un nombre válido.");
+        return;
+    }
+
+    // VALIDAR TELÉFONO
+    if (!/^\+?[0-9]{9,15}$/.test(telefonoLimpio)) {
+        alert("Por favor, introduce un teléfono válido.");
+        return;
+    }
+
+    // VALIDAR DIRECCIÓN
+    if (direccion.length < 5 || !numero) {
+        alert("Por favor, introduce una dirección y número de portal válidos.");
+        return;
+    }
+
+    // COMPROBAR ZONA DE REPARTO
+    const localidadNormalizada = localidad
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    if (
+        localidadNormalizada !== "alcoy" &&
+        localidadNormalizada !== "alcoi"
+    ) {
+        alert("Actualmente solo realizamos entregas en Alcoy (Alcoi).");
+        return;
+    }
+
+    // COMPROBAR CARRITO
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+    }
+
+    // ABRIR PANTALLA DE ESPERA
+    const ventanaWhatsApp = window.open("preparando.html", "_blank");
+
+    if (!ventanaWhatsApp) {
+        alert("Permite las ventanas emergentes para continuar con tu pedido.");
+        return;
+    }
+
+    // FECHA Y HORA
+    const fechaHoraPedido = new Intl.DateTimeFormat("es-ES", {
+        timeZone: "Europe/Madrid",
+        dateStyle: "short",
+        timeStyle: "short"
+    }).format(new Date());
+
+    // SOLICITAR NÚMERO DE PEDIDO
+    let numeroPedido;
+
+    try {
+
+        const respuestaPedido = await fetch(URL_WORKER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "pedido"
+            })
+        });
+
+        if (!respuestaPedido.ok) {
+            throw new Error("No se pudo generar el pedido");
+        }
+
+        const resultadoPedido = await respuestaPedido.json();
+
+        numeroPedido = resultadoPedido.numeroPedido;
+
+        if (!numeroPedido) {
+            throw new Error("Número de pedido no recibido");
+        }
+
+    } catch (error) {
+
+        console.error("Error generando pedido:", error);
+
+        ventanaWhatsApp.close();
+
+        alert("No se pudo generar el número de pedido. Inténtalo nuevamente.");
+        return;
+    }
+
+    // PREPARAR DIRECCIÓN Y GOOGLE MAPS
+    const calleSinCodigoPostal = direccion
+        .replace(/\b\d{5}\b/g, "")
+        .trim();
+
+    const direccionCompleta =
+        `${direccion}, Nº ${numero}, ${localidad}`;
+
+    const direccionMaps =
+        `${numero} ${calleSinCodigoPostal}, ${localidad}, Alicante, España`;
+
+    let enlaceMaps =
+        `https://maps.google.com/?q=${encodeURIComponent(direccionMaps)}`;
+
+    // INTENTAR ACORTAR ENLACE
+    try {
+
+        const respuestaMaps = await fetch(URL_WORKER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: enlaceMaps
+            })
+        });
+
+        const resultadoMaps = await respuestaMaps.json();
+
+        if (respuestaMaps.ok && resultadoMaps.shortUrl) {
+            enlaceMaps = resultadoMaps.shortUrl;
+        }
+
+    } catch (error) {
+
+        console.error("Error acortando enlace:", error);
+
+    }
+
+    // CALCULAR TOTAL
+    const total = carrito.reduce(
+        (suma, item) => suma + item.precio * item.unidades,
+        0
+    );
+
+    // CONSTRUIR MENSAJE DE WHATSAPP
+    let mensaje = "🍗 *MRWINGSALCOY*\n";
+    mensaje += "━━━━━━━━━━━━━━━━\n";
+    mensaje += "🛎️ *NUEVO PEDIDO RECIBIDO*\n";
+    mensaje += "━━━━━━━━━━━━━━━━\n";
+    mensaje += `🔢 Pedido: *${numeroPedido}*\n`;
+    mensaje += `📅 Fecha y hora: ${fechaHoraPedido}\n\n`;
+
+    mensaje += "👤 *DATOS DEL CLIENTE*\n";
+    mensaje += `Nombre: ${nombre}\n`;
+    mensaje += `Teléfono: ${telefonoCliente}\n\n`;
+
+    mensaje += "📍 *DIRECCIÓN DE ENTREGA*\n";
+    mensaje += `${direccionCompleta}\n`;
+    mensaje += `📍 Ubicación: ${enlaceMaps}\n`;
+
+    if (piso) {
+        mensaje += `🏠 Piso y puerta: ${piso}\n`;
+    }
+
+    mensaje += "\n━━━━━━━━━━━━━━━━\n";
+    mensaje += "🍗 *DETALLE DEL PEDIDO*\n";
+    mensaje += "━━━━━━━━━━━━━━━━\n\n";
+
+    carrito.forEach(item => {
+
+        if (item.tipo === "combo") {
+
+            const saboresElegidos = (item.sabores || []).join(", ");
+
+            mensaje += `🍗 *${item.sabor}*\n`;
+            mensaje += `   ${item.descripcion}\n`;
+            mensaje += `   🌶️ Sabores: ${saboresElegidos}\n`;
+            mensaje += `   🔢 Cantidad: ${item.unidades}\n`;
+            mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
+
+        } else {
+
+            let tipoProducto = "alitas";
+            let emojiProducto = "🍗";
+
+            if (item.sabor.startsWith("SALSA ")) {
+                tipoProducto = "salsa";
+                emojiProducto = "🌶️";
+
+            } else if (
+                item.sabor.startsWith("PASIÓN ") ||
+                item.sabor.startsWith("OVERNIGHT ")
+            ) {
+                tipoProducto = "postre";
+                emojiProducto = "🍰";
+
+            } else if (item.tipo === "bebida") {
+                tipoProducto = "bebida";
+                emojiProducto = "🥤";
+            }
+
+            mensaje += `${emojiProducto} *${item.sabor}*\n`;
+            mensaje += `   ${item.cantidad} ${tipoProducto} × ${item.unidades}\n`;
+            mensaje += `   💶 Subtotal: ${euros(item.precio * item.unidades)}\n\n`;
+        }
+
+    });
+
+    mensaje += "━━━━━━━━━━━━━━━━\n";
+    mensaje += `💰 *TOTAL DEL PEDIDO: ${euros(total)}*\n`;
+    mensaje += "━━━━━━━━━━━━━━━━\n";
+
+    if (observaciones) {
+        mensaje += "\n📝 *OBSERVACIONES DEL CLIENTE*\n";
+        mensaje += `${observaciones}\n`;
+    }
+
+    mensaje += "\n🙏 ¡Gracias por elegir MrWingsAlcoy!";
+
+    // GUARDAR PEDIDO EN CLOUDFLARE
+    try {
+
+        const respuestaGuardar = await fetch(URL_WORKER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "guardar",
+                pedido: {
+                    numeroPedido: numeroPedido,
+                    fecha: fechaHoraPedido,
+                    cliente: nombre,
+                    telefono: telefonoCliente,
+                    direccion: piso
+                        ? `${direccionCompleta}, Piso/Puerta: ${piso}`
+                        : direccionCompleta,
+                    productos: {
+                        items: carrito,
+                        observaciones: observaciones
+                    },
+                    total: total
+                }
+            })
+        });
+
+        if (!respuestaGuardar.ok) {
+            throw new Error("No se pudo guardar el pedido");
+        }
+
+    } catch (error) {
+
+        console.error("Error guardando pedido:", error);
+
+        ventanaWhatsApp.close();
+
+        alert("No se pudo registrar tu pedido. Inténtalo nuevamente.");
+        return;
+    }
+
+    // ABRIR WHATSAPP
+    const urlWhatsApp =
+        `https://wa.me/${telefonoMrWings}?text=${encodeURIComponent(mensaje)}`;
+
+    ventanaWhatsApp.location.href = urlWhatsApp;
+
+    console.log("Pedido registrado:", numeroPedido);
+
+    // DETECTAR REGRESO DEL CLIENTE
+    let salioDeLaWeb = false;
+
+    function detectarRegreso() {
+
+        if (document.visibilityState === "hidden") {
+            salioDeLaWeb = true;
+        }
+
+        if (
+            document.visibilityState === "visible" &&
+            salioDeLaWeb
+        ) {
+
+            document.removeEventListener(
+                "visibilitychange",
+                detectarRegreso
+            );
+
+            // VACIAR CARRITO GUARDADO
+            localStorage.setItem("mrwingsCarrito", JSON.stringify([]));
+
+            alert(
+                "🍗 ¡Gracias por elegir MrWingsAlcoy!\n\n" +
+                "Esperamos que disfrutes de tu pedido."
+            );
+
+            window.location.href = "/";
+
+        }
+
+    }
+
+    document.addEventListener(
+        "visibilitychange",
+        detectarRegreso
+    );
+
+});
 });
