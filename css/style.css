@@ -4444,7 +4444,7 @@ margin: 0;
 
 .fire-particle {
     position: absolute;
-    bottom: -20px;
+    bottom: 0px;
     width: 4px;
     height: 4px;
     border-radius: 50%;
@@ -4506,7 +4506,7 @@ margin: 0;
 .fire-particle {
     display: block !important;
     position: absolute;
-    bottom: -20px;
+    bottom: 0px;
     width: 6px;
     height: 6px;
     background: #ffcc00;

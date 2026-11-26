@@ -1231,28 +1231,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // CREAR PARTÍCULAS DE FUEGO
 
-    if (particlesContainer) {
+if (particlesContainer) {
 
-        for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 45; i++) {
 
-            const particle = document.createElement("span");
+        const particle = document.createElement("span");
 
-            particle.classList.add("fire-particle");
+        particle.classList.add("fire-particle");
 
-            particle.style.left = Math.random() * 100 + "%";
+        particle.style.left = Math.random() * 100 + "%";
 
-            particle.style.animationDuration =
-                (4 + Math.random() * 5) + "s";
+        const duration = 4 + Math.random() * 5;
 
-            particle.style.animationDelay =
-                (Math.random() * 5) + "s";
+        particle.style.animationDuration = duration + "s";
 
-            particlesContainer.appendChild(particle);
+        // Distribuir las partículas desde el inicio
+        particle.style.animationDelay =
+            -(Math.random() * duration) + "s";
 
-        }
+        particlesContainer.appendChild(particle);
 
     }
 
+}
     // ENTRAR A LA WEB
 
     enterButton.addEventListener("click", function () {
