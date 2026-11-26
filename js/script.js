@@ -815,3 +815,454 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE BRAVAS
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const bravasImage = document.querySelector('.flavor-card img[src="img/bravas.jpg"]');
+    const bravasModal = document.getElementById("bravas-modal");
+    const closeBravasModal = document.getElementById("close-bravas-modal");
+
+    if (!bravasImage || !bravasModal || !closeBravasModal) return;
+
+    // Abrir ventana
+    bravasImage.style.cursor = "pointer";
+
+    bravasImage.addEventListener("click", function () {
+        bravasModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // Cerrar con la X
+    closeBravasModal.addEventListener("click", function () {
+        bravasModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // Cerrar al tocar fuera
+    bravasModal.addEventListener("click", function (event) {
+        if (event.target === bravasModal) {
+            bravasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            bravasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE ACEVICHADAS
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const acevichadasImage = document.querySelector('.flavor-card img[src="img/acevichadas.jpg"]');
+    const acevichadasModal = document.getElementById("acevichadas-modal");
+    const closeAcevichadasModal = document.getElementById("close-acevichadas-modal");
+
+    if (!acevichadasImage || !acevichadasModal || !closeAcevichadasModal) return;
+
+    // Abrir ventana
+    acevichadasImage.style.cursor = "pointer";
+
+    acevichadasImage.addEventListener("click", function () {
+        acevichadasModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // Cerrar con la X
+    closeAcevichadasModal.addEventListener("click", function () {
+        acevichadasModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // Cerrar al tocar fuera
+    acevichadasModal.addEventListener("click", function (event) {
+        if (event.target === acevichadasModal) {
+            acevichadasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            acevichadasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE MARACUYÁ
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const maracuyaImage = document.querySelector('.flavor-card img[src="img/maracuya.jpg"]');
+    const maracuyaModal = document.getElementById("maracuya-modal");
+    const closeMaracuyaModal = document.getElementById("close-maracuya-modal");
+
+    if (!maracuyaImage || !maracuyaModal || !closeMaracuyaModal) return;
+
+    // Abrir ventana
+    maracuyaImage.style.cursor = "pointer";
+
+    maracuyaImage.addEventListener("click", function () {
+        maracuyaModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // Cerrar con la X
+    closeMaracuyaModal.addEventListener("click", function () {
+        maracuyaModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // Cerrar al tocar fuera
+    maracuyaModal.addEventListener("click", function (event) {
+        if (event.target === maracuyaModal) {
+            maracuyaModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            maracuyaModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE TRUFADAS
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const trufadasImage = document.querySelector('.flavor-card img[src="img/trufadas.jpg"]');
+    const trufadasModal = document.getElementById("trufadas-modal");
+    const closeTrufadasModal = document.getElementById("close-trufadas-modal");
+
+    if (!trufadasImage || !trufadasModal || !closeTrufadasModal) return;
+
+    // ABRIR VENTANA
+    trufadasImage.style.cursor = "pointer";
+
+    trufadasImage.addEventListener("click", function () {
+        trufadasModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // CERRAR CON LA X
+    closeTrufadasModal.addEventListener("click", function () {
+        trufadasModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // CERRAR AL TOCAR FUERA
+    trufadasModal.addEventListener("click", function (event) {
+        if (event.target === trufadasModal) {
+            trufadasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // CERRAR CON ESCAPE
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            trufadasModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE SALSA BBQ
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salsaBbqImage = document.querySelector('.flavor-card img[src="img/salsabbq.jpg"]');
+    const salsaBbqModal = document.getElementById("salsa-bbq-modal");
+    const closeSalsaBbqModal = document.getElementById("close-salsa-bbq-modal");
+
+    if (!salsaBbqImage || !salsaBbqModal || !closeSalsaBbqModal) return;
+
+    // ABRIR VENTANA
+    salsaBbqImage.style.cursor = "pointer";
+
+    salsaBbqImage.addEventListener("click", function () {
+        salsaBbqModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // CERRAR CON LA X
+    closeSalsaBbqModal.addEventListener("click", function () {
+        salsaBbqModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // CERRAR AL TOCAR FUERA
+    salsaBbqModal.addEventListener("click", function (event) {
+        if (event.target === salsaBbqModal) {
+            salsaBbqModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // CERRAR CON ESCAPE
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            salsaBbqModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MRWINGSALCOY - VENTANA EMERGENTE SALSA MARACUYÁ
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salsaMaracuyaImage = document.querySelector(
+        '.flavor-card img[src="img/salsamaracuya.jpg"]'
+    );
+
+    const salsaMaracuyaModal = document.getElementById(
+        "salsa-maracuya-modal"
+    );
+
+    const closeSalsaMaracuyaModal = document.getElementById(
+        "close-salsa-maracuya-modal"
+    );
+
+    if (!salsaMaracuyaImage || !salsaMaracuyaModal || !closeSalsaMaracuyaModal) return;
+
+    // ABRIR VENTANA
+    salsaMaracuyaImage.style.cursor = "pointer";
+
+    salsaMaracuyaImage.addEventListener("click", function () {
+        salsaMaracuyaModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+
+    // CERRAR CON LA X
+    closeSalsaMaracuyaModal.addEventListener("click", function () {
+        salsaMaracuyaModal.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    // CERRAR AL TOCAR FUERA
+    salsaMaracuyaModal.addEventListener("click", function (event) {
+        if (event.target === salsaMaracuyaModal) {
+            salsaMaracuyaModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+    // CERRAR CON ESCAPE
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            salsaMaracuyaModal.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    });
+
+});
+// =========================================
+// MODAL SALSA ACEVICHADA
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salsaAcevichadaImg = document.querySelector(
+        '.flavor-card img[src="img/salsaacevichada.jpg"]'
+    );
+
+    const salsaAcevichadaModal = document.getElementById(
+        "salsa-acevichada-modal"
+    );
+
+    const closeSalsaAcevichadaModal = document.getElementById(
+        "close-salsa-acevichada-modal"
+    );
+
+    if (salsaAcevichadaImg && salsaAcevichadaModal && closeSalsaAcevichadaModal) {
+
+        salsaAcevichadaImg.style.cursor = "pointer";
+
+        salsaAcevichadaImg.addEventListener("click", function () {
+            salsaAcevichadaModal.style.display = "flex";
+        });
+
+        closeSalsaAcevichadaModal.addEventListener("click", function () {
+            salsaAcevichadaModal.style.display = "none";
+        });
+
+        salsaAcevichadaModal.addEventListener("click", function (event) {
+            if (event.target === salsaAcevichadaModal) {
+                salsaAcevichadaModal.style.display = "none";
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                salsaAcevichadaModal.style.display = "none";
+            }
+        });
+
+    }
+
+});
+// =========================================
+// MODAL SALSA TRUFADA
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salsaTrufadaImg = document.querySelector(
+        '.flavor-card img[src="img/salsatrufada.jpg"]'
+    );
+
+    const salsaTrufadaModal = document.getElementById(
+        "salsa-trufada-modal"
+    );
+
+    const closeSalsaTrufadaModal = document.getElementById(
+        "close-salsa-trufada-modal"
+    );
+
+    if (salsaTrufadaImg && salsaTrufadaModal && closeSalsaTrufadaModal) {
+
+        salsaTrufadaImg.style.cursor = "pointer";
+
+        salsaTrufadaImg.addEventListener("click", function () {
+            salsaTrufadaModal.style.display = "flex";
+        });
+
+        closeSalsaTrufadaModal.addEventListener("click", function () {
+            salsaTrufadaModal.style.display = "none";
+        });
+
+        salsaTrufadaModal.addEventListener("click", function (event) {
+            if (event.target === salsaTrufadaModal) {
+                salsaTrufadaModal.style.display = "none";
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                salsaTrufadaModal.style.display = "none";
+            }
+        });
+
+    }
+
+});
+// =========================================
+// MODAL SALSA BRAVA
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salsaBravaImg = document.querySelector(
+        '.flavor-card img[src="img/salsabrava.jpg"]'
+    );
+
+    const salsaBravaModal = document.getElementById(
+        "salsa-brava-modal"
+    );
+
+    const closeSalsaBravaModal = document.getElementById(
+        "close-salsa-brava-modal"
+    );
+
+    if (salsaBravaImg && salsaBravaModal && closeSalsaBravaModal) {
+
+        salsaBravaImg.style.cursor = "pointer";
+
+        salsaBravaImg.addEventListener("click", function () {
+            salsaBravaModal.style.display = "flex";
+        });
+
+        closeSalsaBravaModal.addEventListener("click", function () {
+            salsaBravaModal.style.display = "none";
+        });
+
+        salsaBravaModal.addEventListener("click", function (event) {
+            if (event.target === salsaBravaModal) {
+                salsaBravaModal.style.display = "none";
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                salsaBravaModal.style.display = "none";
+            }
+        });
+
+    }
+
+});
+// =========================================
+// INTRO CINEMÁTICA MRWINGSALCOY
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const intro = document.getElementById("mrwings-intro");
+    const enterButton = document.getElementById("intro-enter");
+    const particlesContainer = document.querySelector(".intro-particles");
+    console.log("Contenedor de partículas:", particlesContainer);
+
+    if (!intro || !enterButton) return;
+
+    // CREAR PARTÍCULAS DE FUEGO
+
+    if (particlesContainer) {
+
+        for (let i = 0; i < 45; i++) {
+
+            const particle = document.createElement("span");
+
+            particle.classList.add("fire-particle");
+
+            particle.style.left = Math.random() * 100 + "%";
+
+            particle.style.animationDuration =
+                (4 + Math.random() * 5) + "s";
+
+            particle.style.animationDelay =
+                (Math.random() * 5) + "s";
+
+            particlesContainer.appendChild(particle);
+
+        }
+
+    }
+
+    // ENTRAR A LA WEB
+
+    enterButton.addEventListener("click", function () {
+
+        intro.classList.add("hidden");
+
+        setTimeout(function () {
+            intro.style.display = "none";
+        }, 1000);
+
+    });
+
+});
