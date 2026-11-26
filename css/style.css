@@ -4457,8 +4457,9 @@ margin: 0;
 }
 
 @keyframes fireRise {
+
     0% {
-        transform: translateY(0) scale(.5);
+        transform: translateY(0) translateX(0) scale(0.5);
         opacity: 0;
     }
 
@@ -4466,16 +4467,17 @@ margin: 0;
         opacity: 1;
     }
 
-    80% {
-        opacity: .8;
+    50% {
+        transform: translateY(-50vh) translateX(20px) scale(1);
+        opacity: 0.9;
     }
 
     100% {
-        transform: translateY(-110vh) translateX(35px) scale(0);
+        transform: translateY(-100vh) translateX(40px) scale(0);
         opacity: 0;
     }
-}
 
+}
 .fire-particle:nth-child(3n) {
     background: #ffdd77;
     box-shadow: 0 0 12px #ffae00;
