@@ -4,6 +4,28 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // DETECTAR REGRESO DE WHATSAPP
+document.addEventListener("visibilitychange", function () {
+
+    if (
+        document.visibilityState === "visible" &&
+        sessionStorage.getItem("mrwingsPedidoPendiente") === "true"
+    ) {
+
+        sessionStorage.removeItem("mrwingsPedidoPendiente");
+
+        localStorage.setItem("mrwingsCarrito", JSON.stringify([]));
+
+        alert(
+            "🍗 ¡Gracias por elegir MrWingsAlcoy!\n\n" +
+            "Esperamos que disfrutes de tu pedido."
+        );
+
+        window.location.href = "/";
+
+    }
+
+});
     // RECUPERAR CARRITO
     const carrito = JSON.parse(
         localStorage.getItem("mrwingsCarrito")
@@ -509,47 +531,13 @@ formularioPedido.addEventListener("submit", async function(event) {
     const urlWhatsApp =
         `https://wa.me/${telefonoMrWings}?text=${encodeURIComponent(mensaje)}`;
 
+    sessionStorage.setItem("mrwingsPedidoPendiente", "true");
+
     ventanaWhatsApp.location.href = urlWhatsApp;
 
     console.log("Pedido registrado:", numeroPedido);
 
-    // DETECTAR REGRESO DEL CLIENTE
-    let salioDeLaWeb = false;
-
-    function detectarRegreso() {
-
-        if (document.visibilityState === "hidden") {
-            salioDeLaWeb = true;
-        }
-
-        if (
-            document.visibilityState === "visible" &&
-            salioDeLaWeb
-        ) {
-
-            document.removeEventListener(
-                "visibilitychange",
-                detectarRegreso
-            );
-
-            // VACIAR CARRITO GUARDADO
-            localStorage.setItem("mrwingsCarrito", JSON.stringify([]));
-
-            alert(
-                "🍗 ¡Gracias por elegir MrWingsAlcoy!\n\n" +
-                "Esperamos que disfrutes de tu pedido."
-            );
-
-            window.location.href = "/";
-
-        }
-
-    }
-
-    document.addEventListener(
-        "visibilitychange",
-        detectarRegreso
-    );
-
+      // Aquí termina el código del envío del pedido
+    
 });
 });
