@@ -434,18 +434,33 @@ const totalFinal = Math.round(
     (subtotalOriginal - descuento) * 100
 ) / 100;
 
-// MOSTRAR RESUMEN
+// MOSTRAR RESUMEN DEL CARRITO
 cartTotal.innerHTML = `
-    <div>Subtotal: ${euros(subtotalOriginal)}</div>
+    <div class="checkout-summary">
 
-    ${descuento > 0 ? `
-        <div style="color:#ff5a00; font-weight:bold;">
-            🔥 BLACK FRIDAY -10 %: -${euros(descuento)}
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>${euros(subtotalOriginal)}</strong>
         </div>
-    ` : ""}
 
-    <div style="font-size:1.2em; font-weight:bold;">
-        TOTAL: ${euros(totalFinal)}
+        ${descuento > 0 ? `
+            <div class="summary-discount">
+                <span>🔥 BLACK FRIDAY -10 %</span>
+                <strong>-${euros(descuento)}</strong>
+            </div>
+        ` : ""}
+
+        <div class="summary-total">
+            <span>TOTAL A PAGAR</span>
+            <strong>${euros(totalFinal)}</strong>
+        </div>
+
+        ${descuento > 0 ? `
+            <div class="summary-message">
+                🖤 ¡Has ahorrado ${euros(descuento)}!
+            </div>
+        ` : ""}
+
     </div>
 `;
 

@@ -135,18 +135,25 @@ const totalFinal = Math.round(
 
 // MOSTRAR RESUMEN DEL PEDIDO
 totalContainer.innerHTML = `
-    <div>
-        Subtotal: ${euros(subtotalOriginal)}
-    </div>
+    <div class="checkout-summary">
 
-    ${descuento > 0 ? `
-        <div style="color:#ff5a00; font-weight:bold;">
-            🔥 Black Friday -10 %: -${euros(descuento)}
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>${euros(subtotalOriginal)}</strong>
         </div>
-    ` : ""}
 
-    <div style="font-size:1.2em; font-weight:bold;">
-        TOTAL: ${euros(totalFinal)}
+        ${descuento > 0 ? `
+            <div class="summary-discount">
+                <span>🔥 BLACK FRIDAY -10 %</span>
+                <strong>-${euros(descuento)}</strong>
+            </div>
+        ` : ""}
+
+        <div class="summary-total">
+            <span>TOTAL A PAGAR</span>
+            <strong>${euros(totalFinal)}</strong>
+        </div>
+
     </div>
 `;
         // CREAR FORMULARIO DE ENTREGA
