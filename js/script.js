@@ -407,12 +407,47 @@ if (cartCount) {
 
         });
 
-        const total = carrito.reduce(
-            (suma, item) => suma + item.precio * item.unidades,
-            0
-        );
+        // CALCULAR SUBTOTAL
+const subtotalOriginal = carrito.reduce(
+    (suma, item) => suma + item.precio * item.unidades,
+    0
+);
 
-        cartTotal.textContent = euros(total);
+// COMPROBAR BLACK FRIDAY
+const fechaActual = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Madrid",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+}).format(new Date());
+
+const blackFridayActivo =
+    fechaActual >= "2026-11-27" &&
+    fechaActual <= "2026-11-29";
+
+// CALCULAR DESCUENTO
+const descuento = blackFridayActivo
+    ? Math.round(subtotalOriginal * 10) / 100
+    : 0;
+
+const totalFinal = Math.round(
+    (subtotalOriginal - descuento) * 100
+) / 100;
+
+// MOSTRAR RESUMEN
+cartTotal.innerHTML = `
+    <div>Subtotal: ${euros(subtotalOriginal)}</div>
+
+    ${descuento > 0 ? `
+        <div style="color:#ff5a00; font-weight:bold;">
+            🔥 BLACK FRIDAY -10 %: -${euros(descuento)}
+        </div>
+    ` : ""}
+
+    <div style="font-size:1.2em; font-weight:bold;">
+        TOTAL: ${euros(totalFinal)}
+    </div>
+`;
 
     }
 

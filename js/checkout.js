@@ -42,7 +42,17 @@ document.addEventListener("visibilitychange", function () {
             currency: "EUR"
         });
     }
+// BLACK FRIDAY: DEL 27 AL 29 DE NOVIEMBRE DE 2026
+function blackFridayActivo() {
+    const fecha = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Madrid",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(new Date());
 
+    return fecha >= "2026-11-27" && fecha <= "2026-11-29";
+}
     // COMPROBAR CARRITO
     if (carrito.length === 0) {
 
@@ -112,8 +122,33 @@ document.addEventListener("visibilitychange", function () {
 
     });
 
-    // MOSTRAR TOTAL
-    totalContainer.textContent = euros(total);
+    // CALCULAR DESCUENTO BLACK FRIDAY
+const subtotalOriginal = total;
+
+const descuento = blackFridayActivo()
+    ? Math.round(subtotalOriginal * 10) / 100
+    : 0;
+
+const totalFinal = Math.round(
+    (subtotalOriginal - descuento) * 100
+) / 100;
+
+// MOSTRAR RESUMEN DEL PEDIDO
+totalContainer.innerHTML = `
+    <div>
+        Subtotal: ${euros(subtotalOriginal)}
+    </div>
+
+    ${descuento > 0 ? `
+        <div style="color:#ff5a00; font-weight:bold;">
+            🔥 Black Friday -10 %: -${euros(descuento)}
+        </div>
+    ` : ""}
+
+    <div style="font-size:1.2em; font-weight:bold;">
+        TOTAL: ${euros(totalFinal)}
+    </div>
+`;
         // CREAR FORMULARIO DE ENTREGA
 
     formularioContainer.innerHTML = `
@@ -405,11 +440,8 @@ formularioPedido.addEventListener("submit", async function(event) {
 
     }
 
-    // CALCULAR TOTAL
-    const total = carrito.reduce(
-        (suma, item) => suma + item.precio * item.unidades,
-        0
-    );
+    // TOTAL CON DESCUENTO BLACK FRIDAY
+const total = totalFinal;
 
     // CONSTRUIR MENSAJE DE WHATSAPP
     let mensaje = "🍗 *MRWINGSALCOY*\n";
@@ -476,7 +508,13 @@ formularioPedido.addEventListener("submit", async function(event) {
     });
 
     mensaje += "━━━━━━━━━━━━━━━━\n";
-    mensaje += `💰 *TOTAL DEL PEDIDO: ${euros(total)}*\n`;
+    mensaje += `Subtotal: ${euros(subtotalOriginal)}\n`;
+
+if (descuento > 0) {
+    mensaje += `🔥 BLACK FRIDAY -10 %: -${euros(descuento)}\n`;
+}
+
+mensaje += `💰 *TOTAL A PAGAR: ${euros(total)}*\n`;
     mensaje += "━━━━━━━━━━━━━━━━\n";
 
     if (observaciones) {
