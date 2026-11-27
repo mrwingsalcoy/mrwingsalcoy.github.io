@@ -4702,3 +4702,66 @@ margin: 0;
     position: absolute;
     z-index: 2;
 }
+
+/* =================================
+   BLACK FRIDAY - BANDA ANIMADA
+================================= */
+
+.black-friday-marquee {
+    width: 100%;
+    overflow: hidden;
+    background: #080808;
+    border-top: 2px solid #ff5a00;
+    border-bottom: 2px solid #ff5a00;
+    padding: 13px 0;
+    margin-bottom: 25px;
+    white-space: nowrap;
+}
+
+.black-friday-track {
+    display: flex;
+    width: max-content;
+    animation: blackFridayMove 25s linear infinite;
+}
+
+.black-friday-track span {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    padding-right: 35px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.black-friday-track strong {
+    color: #ff5a00;
+    font-size: 17px;
+}
+
+@keyframes blackFridayMove {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 576px) {
+    .black-friday-track span {
+        font-size: 12px;
+        gap: 20px;
+    }
+
+    .black-friday-track strong {
+        font-size: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .black-friday-track {
+        animation: none;
+    }
+}
